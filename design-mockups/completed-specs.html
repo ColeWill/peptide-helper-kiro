@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Completed Specs — PeptideHelper Internal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --color-bg-primary: #0a1628;
+        --color-bg-secondary: #0d2b1e;
+        --color-bg-card: #0f1f35;
+        --color-accent: #1db954;
+        --color-accent-hover: #17a349;
+        --color-blue-mid: #1a3a5c;
+        --color-blue-bright: #4a9eff;
+        --color-amber: #f59e0b;
+        --color-amber-bg: rgba(245, 158, 11, 0.12);
+        --color-text-primary: #f0f4f0;
+        --color-text-secondary: #a0b0a8;
+        --color-border: #1e3a52;
+        --font-family: "Inter", system-ui, sans-serif;
+        --font-size-label: 12px;
+        --font-size-body: 16px;
+        --font-size-heading-sm: 20px;
+        --font-size-heading-lg: 36px;
+        --font-weight-normal: 400;
+        --font-weight-medium: 500;
+        --font-weight-semibold: 600;
+        --font-weight-bold: 700;
+        --space-1: 4px;
+        --space-2: 8px;
+        --space-3: 12px;
+        --space-4: 16px;
+        --space-6: 24px;
+        --space-8: 32px;
+        --space-12: 48px;
+        --space-16: 64px;
+        --radius-sm: 4px;
+        --radius-md: 8px;
+        --radius-pill: 9999px;
+        --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: var(--font-family);
+        font-size: var(--font-size-body);
+        color: var(--color-text-primary);
+        background: var(--color-bg-primary);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .internal-banner {
+        background: var(--color-amber-bg);
+        border-bottom: 1px solid var(--color-amber);
+        padding: var(--space-2) var(--space-8);
+        text-align: center;
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-amber);
+        letter-spacing: 0.06em;
+      }
+      .nav {
+        background: rgba(10, 22, 40, 0.95);
+        border-bottom: 1px solid var(--color-border);
+        padding: var(--space-4) var(--space-8);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav-logo {
+        font-size: var(--font-size-heading-sm);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-accent);
+      }
+      .nav-logo span {
+        color: var(--color-text-primary);
+      }
+      .nav-links {
+        display: flex;
+        gap: var(--space-6);
+      }
+      .nav-links a {
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-medium);
+        color: var(--color-text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--color-accent);
+      }
+
+      .page-header {
+        background: linear-gradient(
+          135deg,
+          var(--color-bg-secondary) 0%,
+          var(--color-bg-primary) 100%
+        );
+        padding: var(--space-12) var(--space-8);
+        border-bottom: 1px solid var(--color-border);
+      }
+      .page-header-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .page-eyebrow {
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-amber);
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin-bottom: var(--space-2);
+      }
+      .page-title {
+        font-size: var(--font-size-heading-lg);
+        font-weight: var(--font-weight-bold);
+        margin-bottom: var(--space-2);
+      }
+      .page-subtitle {
+        color: var(--color-text-secondary);
+        max-width: 560px;
+      }
+
+      .main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: var(--space-8);
+      }
+      .divider {
+        border: none;
+        border-top: 1px solid var(--color-border);
+        margin: var(--space-8) 0;
+      }
+      .section-header {
+        margin-bottom: var(--space-6);
+      }
+      .section-title {
+        font-size: var(--font-size-heading-sm);
+        font-weight: var(--font-weight-bold);
+        margin-bottom: var(--space-1);
+      }
+      .section-desc {
+        font-size: var(--font-size-label);
+        color: var(--color-text-secondary);
+      }
+
+      /* PROGRESS OVERVIEW */
+      .progress-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--space-4);
+        margin-bottom: var(--space-8);
+      }
+      .progress-card {
+        background: var(--color-bg-card);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: var(--space-6);
+        text-align: center;
+        transition: border-color 0.2s;
+      }
+      .progress-card:hover {
+        border-color: var(--color-accent);
+      }
+      .progress-count {
+        font-size: 40px;
+        font-weight: var(--font-weight-bold);
+        line-height: 1;
+        margin-bottom: var(--space-2);
+      }
+      .progress-label {
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--color-text-secondary);
+      }
+      .count-vibe-coded {
+        color: var(--color-blue-bright);
+      }
+      .count-spec-coded {
+        color: var(--color-amber);
+      }
+      .count-completed {
+        color: var(--color-accent);
+      }
+      .count-yet-to-complete {
+        color: #a0b0a8;
+      }
+
+      /* STATUS BADGES */
+      .badge {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: var(--font-weight-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 3px var(--space-2);
+        border-radius: var(--radius-pill);
+      }
+      .badge-vibe-coded {
+        background: rgba(74, 158, 255, 0.2);
+        color: var(--color-blue-bright);
+      }
+      .badge-spec-coded {
+        background: rgba(245, 158, 11, 0.2);
+        color: var(--color-amber);
+      }
+      .badge-completed {
+        background: rgba(29, 185, 84, 0.2);
+        color: var(--color-accent);
+      }
+      .badge-yet-to-complete {
+        background: rgba(160, 176, 168, 0.15);
+        color: var(--color-text-secondary);
+      }
+
+      /* SPECS TABLE */
+      .specs-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .specs-table th {
+        text-align: left;
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--color-text-secondary);
+        padding: var(--space-2) var(--space-4);
+        border-bottom: 1px solid var(--color-border);
+      }
+      .specs-table td {
+        padding: var(--space-3) var(--space-4);
+        border-bottom: 1px solid var(--color-border);
+        font-size: 14px;
+        vertical-align: top;
+      }
+      .specs-table tr:last-child td {
+        border-bottom: none;
+      }
+      .specs-table tr:hover td {
+        background: var(--color-bg-card);
+      }
+      .spec-name {
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-text-primary);
+      }
+      .spec-desc {
+        color: var(--color-text-secondary);
+        line-height: 1.5;
+      }
+
+      /* AGENT TASKS TABLE */
+      .agent-tasks-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .agent-tasks-table th {
+        text-align: left;
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--color-text-secondary);
+        padding: var(--space-2) var(--space-4);
+        border-bottom: 1px solid var(--color-border);
+      }
+      .agent-tasks-table td {
+        padding: var(--space-3) var(--space-4);
+        border-bottom: 1px solid var(--color-border);
+        font-size: 14px;
+        vertical-align: top;
+      }
+      .agent-tasks-table tr:last-child td {
+        border-bottom: none;
+      }
+      .agent-tasks-table tr:hover td {
+        background: var(--color-bg-card);
+      }
+      .agent-col {
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-accent);
+      }
+
+      /* PROMPT HISTORY */
+      .prompt-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+      .prompt-item {
+        background: var(--color-bg-card);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: var(--space-4) var(--space-6);
+        transition: border-color 0.2s;
+      }
+      .prompt-item:hover {
+        border-color: var(--color-blue-bright);
+      }
+      .prompt-meta {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        margin-bottom: var(--space-2);
+      }
+      .prompt-date {
+        font-size: var(--font-size-label);
+        color: var(--color-text-secondary);
+      }
+      .prompt-text {
+        font-size: 14px;
+        color: var(--color-text-primary);
+        line-height: 1.6;
+        margin-bottom: var(--space-3);
+      }
+      .prompt-tasks {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+      }
+      .prompt-task-chip {
+        font-size: 11px;
+        font-weight: var(--font-weight-medium);
+        background: var(--color-bg-primary);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-pill);
+        padding: 2px var(--space-3);
+        color: var(--color-text-secondary);
+      }
+
+      .footer {
+        border-top: 1px solid var(--color-border);
+        padding: var(--space-8);
+        text-align: center;
+        color: var(--color-text-secondary);
+        font-size: var(--font-size-label);
+      }
+      .footer a {
+        color: var(--color-accent);
+      }
+
+      @media (max-width: 767px) {
+        .nav {
+          padding: var(--space-3) var(--space-4);
+        }
+        .nav-links {
+          display: none;
+        }
+        .page-header {
+          padding: var(--space-8) var(--space-4);
+        }
+        .page-title {
+          font-size: var(--font-size-heading-sm);
+        }
+        .main {
+          padding: var(--space-4);
+        }
+        .progress-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="internal-banner">
+      ⚠ Internal Tool — Not part of the public app
+    </div>
+
+    <nav class="nav">
+      <div class="nav-logo">Peptide<span>Helper</span></div>
+      <div class="nav-links">
+        <a href="index.html">Explore</a>
+        <a href="detail.html">Detail View</a>
+        <a href="agent-insights.html">Agent Insights</a>
+        <a href="completed-specs.html" class="active">Completed Specs</a>
+      </div>
+    </nav>
+
+    <div class="page-header">
+      <div class="page-header-inner">
+        <p class="page-eyebrow">Internal Dashboard</p>
+        <h1 class="page-title">Completed Specs</h1>
+        <p class="page-subtitle">
+          Full history of all specs, prompts, agent tasks, and project progress
+          for PeptideHelper.
+        </p>
+      </div>
+    </div>
+
+    <main class="main">
+      <!-- PROGRESS OVERVIEW -->
+      <div class="section-header">
+        <h2 class="section-title">Progress Overview</h2>
+        <p class="section-desc">Count of specs in each status category.</p>
+      </div>
+      <div class="progress-grid" id="progressGrid"></div>
+
+      <hr class="divider" />
+
+      <!-- SPECS LIST -->
+      <div class="section-header">
+        <h2 class="section-title">All Specs</h2>
+        <p class="section-desc">
+          Every spec in the project with its current status and description.
+        </p>
+      </div>
+      <div
+        style="
+          background: var(--color-bg-card);
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-md);
+          overflow: hidden;
+          margin-bottom: var(--space-8);
+        "
+      >
+        <table class="specs-table" id="specsTable">
+          <thead>
+            <tr>
+              <th>Spec Name</th>
+              <th>Status</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody id="specsBody"></tbody>
+        </table>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- AGENT TASKS -->
+      <div class="section-header">
+        <h2 class="section-title">Agent Task Summary</h2>
+        <p class="section-desc">Which agents completed which tasks.</p>
+      </div>
+      <div
+        style="
+          background: var(--color-bg-card);
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-md);
+          overflow: hidden;
+          margin-bottom: var(--space-8);
+        "
+      >
+        <table class="agent-tasks-table" id="agentTasksTable">
+          <thead>
+            <tr>
+              <th>Agent</th>
+              <th>Completed Tasks</th>
+              <th>Count</th>
+            </tr>
+          </thead>
+          <tbody id="agentTasksBody"></tbody>
+        </table>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- PROMPT HISTORY -->
+      <div class="section-header">
+        <h2 class="section-title">Prompt History</h2>
+        <p class="section-desc">
+          All prompts submitted to Kiro and the tasks they generated, in
+          chronological order.
+        </p>
+      </div>
+      <div class="prompt-list" id="promptList"></div>
+    </main>
+
+    <footer class="footer">
+      <p>
+        PeptideHelper Internal Tools &copy; 2026 —
+        <a href="index.html">Back to App</a>
+      </p>
+    </footer>
+  </body>
+</html>
+
+  <script>
+    /* ============================================================
+       SPEC DATA (updated as project progresses)
+       ============================================================ */
+    const SPECS = [
+      {
+        name: "peptide-helper-ux-design",
+        status: "Spec-Coded",
+        description: "UX Design phase: static HTML/CSS/JS mockups for index, detail, agent-insights, and completed-specs pages plus peptides.json data file."
+      },
+      {
+        name: "React Implementation",
+        status: "Yet to be Completed",
+        description: "Convert approved mockups into production React components with routing, state management, and data layer."
+      }
+    ];
+
+    const AGENT_TASKS = [
+      {
+        agent: "Requirements Agent",
+        tasks: [
+          "Created requirements.md for peptide-helper-ux-design (9 requirements, EARS-pattern)",
+          "Ran automatic requirements detailing pass across all 9 requirements"
+        ]
+      },
+      {
+        agent: "Data Seed Agent",
+        tasks: [
+          "Generated /src/data/peptides.json with 10 real peptide objects",
+          "Validated all field constraints (id uniqueness, URL format, tag membership, character limits)"
+        ]
+      },
+      {
+        agent: "UX Design Mockup Agent",
+        tasks: [
+          "Built /design-mockups/index.html — homepage with hero, filter bar, search, card grid, modal, mobile detail view",
+          "Built /design-mockups/detail.html — full peptide detail page with benefits, research notes, dosage",
+          "Built /design-mockups/agent-insights.html — internal agent flowchart and status dashboard",
+          "Built /design-mockups/completed-specs.html — internal spec history and progress tracker"
+        ]
+      },
+      {
+        agent: "Human Review Gate",
+        tasks: []
+      },
+      {
+        agent: "React Implementation Agent",
+        tasks: []
+      }
+    ];
+
+    const PROMPTS = [
+      {
+        date: "2026-05-28",
+        text: "UX Design phase for Peptide-Helper (react app). Create a complete set of static, single-file HTML/CSS/JS mockups saved in /design-mockups. Pages: index.html (hero, filter, search, card grid), detail.html (full peptide detail), agent-insights.html (internal agent flowcharts), completed-specs.html (internal spec history). Also generate /src/data/peptides.json with 10 real peptides. Modern dark health-tech theme, deep greens/blues, fully responsive, interactive JS. Human approval gate before React implementation.",
+        tasks: [
+          "Create requirements.md (peptide-helper-ux-design)",
+          "Generate /src/data/peptides.json (10 peptides)",
+          "Build /design-mockups/index.html",
+          "Build /design-mockups/detail.html",
+          "Build /design-mockups/agent-insights.html",
+          "Build /design-mockups/completed-specs.html"
+        ]
+      }
+    ];
+
+    /* ============================================================
+       PROGRESS OVERVIEW
+       ============================================================ */
+    const statusCounts = { "Vibe-Coded": 0, "Spec-Coded": 0, "Completed": 0, "Yet to be Completed": 0 };
+    SPECS.forEach(s => { if (statusCounts[s.status] !== undefined) statusCounts[s.status]++; });
+
+    const countConfig = [
+      { key: "Vibe-Coded",        cls: "count-vibe-coded",     label: "Vibe-Coded" },
+      { key: "Spec-Coded",        cls: "count-spec-coded",     label: "Spec-Coded" },
+      { key: "Completed",         cls: "count-completed",      label: "Completed" },
+      { key: "Yet to be Completed", cls: "count-yet-to-complete", label: "Yet to Complete" }
+    ];
+    const progressGrid = document.getElementById('progressGrid');
+    countConfig.forEach(c => {
+      const card = document.createElement('div');
+      card.className = 'progress-card';
+      card.innerHTML = `<div class="progress-count ${c.cls}">${statusCounts[c.key]}</div><div class="progress-label">${c.label}</div>`;
+      progressGrid.appendChild(card);
+    });
+
+    /* ============================================================
+       SPECS TABLE
+       ============================================================ */
+    function badgeClass(status) {
+      const map = {
+        "Vibe-Coded": "badge-vibe-coded",
+        "Spec-Coded": "badge-spec-coded",
+        "Completed":  "badge-completed",
+        "Yet to be Completed": "badge-yet-to-complete"
+      };
+      return 'badge ' + (map[status] || 'badge-yet-to-complete');
+    }
+    const specsBody = document.getElementById('specsBody');
+    SPECS.forEach(s => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="spec-name">${s.name}</td>
+        <td><span class="${badgeClass(s.status)}">${s.status}</span></td>
+        <td class="spec-desc">${s.description}</td>
+      `;
+      specsBody.appendChild(tr);
+    });
+
+    /* ============================================================
+       AGENT TASKS TABLE
+       ============================================================ */
+    const agentTasksBody = document.getElementById('agentTasksBody');
+    AGENT_TASKS.forEach(a => {
+      const tr = document.createElement('tr');
+      const taskList = a.tasks.length
+        ? `<ul style="list-style:none;display:flex;flex-direction:column;gap:4px">${a.tasks.map(t => `<li style="display:flex;gap:8px;align-items:flex-start"><span style="color:var(--color-accent);flex-shrink:0">✓</span>${t}</li>`).join('')}</ul>`
+        : `<span style="color:var(--color-text-secondary);font-style:italic">No tasks yet</span>`;
+      tr.innerHTML = `
+        <td class="agent-col">${a.agent}</td>
+        <td>${taskList}</td>
+        <td style="font-weight:600;color:var(--color-text-primary)">${a.tasks.length}</td>
+      `;
+      agentTasksBody.appendChild(tr);
+    });
+
+    /* ============================================================
+       PROMPT HISTORY
+       ============================================================ */
+    const promptList = document.getElementById('promptList');
+    PROMPTS.forEach(p => {
+      const item = document.createElement('div');
+      item.className = 'prompt-item';
+      item.innerHTML = `
+        <div class="prompt-meta">
+          <span class="badge badge-spec-coded">Prompt</span>
+          <span class="prompt-date">${p.date}</span>
+        </div>
+        <p class="prompt-text">${p.text}</p>
+        <div class="prompt-tasks">
+          ${p.tasks.map(t => `<span class="prompt-task-chip">${t}</span>`).join('')}
+        </div>
+      `;
+      promptList.appendChild(item);
+    });
+    if (PROMPTS.length === 0) {
+      promptList.innerHTML = '<p style="color:var(--color-text-secondary);text-align:center;padding:32px">No prompts recorded yet.</p>';
+    }
+  </script>
+</body>
+</html>

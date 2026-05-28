@@ -1,0 +1,242 @@
+[
+  {
+    "id": "bpc-157",
+    "name": "BPC-157",
+    "tags": ["Muscle Recovery", "Anti-Aging"],
+    "shortDescription": "Body Protection Compound that accelerates healing of muscles, tendons, and gut tissue.",
+    "benefits": [
+      "Accelerates tendon and ligament healing",
+      "Reduces inflammation in muscle tissue",
+      "Supports gut lining repair and leaky gut syndrome",
+      "Promotes angiogenesis (new blood vessel formation)",
+      "Neuroprotective effects supporting brain health",
+      "May reduce pain from injuries and chronic conditions",
+      "Supports joint health and cartilage repair"
+    ],
+    "imagePlaceholderUrl": "https://placehold.co/600x400/0d2b1e/1db954?text=BPC-157",
+    "researchNotes": [
+      "Derived from a protective protein found in human gastric juice",
+      "Multiple rodent studies show accelerated Achilles tendon healing vs. controls",
+      "Shown to upregulate growth hormone receptors in tendon fibroblasts",
+      "Research published in Journal of Physiology demonstrates gut cytoprotective effects",
+      "Currently in Phase II clinical trials for inflammatory bowel disease"
+    ],
+    "suggestedDosage": "200–500 mcg per day, subcutaneous or intramuscular injection, split into 1–2 doses"
+  },
+  {
+    "id": "tb-500",
+    "name": "TB-500",
+    "tags": ["Muscle Recovery", "Anti-Aging"],
+    "shortDescription": "Synthetic version of Thymosin Beta-4 that promotes tissue repair and reduces inflammation.",
+    "benefits": [
+      "Promotes systemic tissue repair throughout the body",
+      "Reduces acute and chronic inflammation",
+      "Improves flexibility and range of motion",
+      "Accelerates wound healing and scar reduction",
+      "Supports hair regrowth in some studies",
+      "Enhances endurance and muscle tone",
+      "Cardioprotective effects in cardiac injury models"
+    ],
+    "imagePlaceholderUrl": "https://placehold.co/600x400/0a1628/4a9eff?text=TB-500",
+    "researchNotes": [
+      "Thymosin Beta-4 is a naturally occurring 43-amino acid peptide found in all human cells",
+      "Studies show TB-500 promotes actin polymerization critical for cell migration and repair",
+      "Research in Annals of the New York Academy of Sciences highlights cardiac repair potential",
+      "Demonstrated hair follicle stimulation in alopecia research models",
+      "Used in veterinary medicine for race horse injury recovery"
+    ],
+    "suggestedDosage": "2–2.5 mg twice per week for 4–6 weeks loading phase, then 2 mg monthly for maintenance"
+  },
+  {
+    "id": "ipamorelin",
+    "name": "Ipamorelin",
+    "tags": ["Anti-Aging", "Fat Loss", "Muscle Recovery"],
+    "shortDescription": "Selective growth hormone secretagogue that stimulates GH release with minimal side effects.",
+    "benefits": [
+      "Stimulates natural growth hormone release from the pituitary",
+      "Promotes lean muscle mass development",
+      "Supports fat metabolism and body composition improvement",
+      "Improves sleep quality and recovery",
+      "Anti-aging effects on skin elasticity and bone density",
+      "Minimal impact on cortisol and prolactin levels",
+      "Enhances IGF-1 production for cellular repair"
+    ],
+    "imagePlaceholderUrl": "https://placehold.co/600x400/0d2b1e/1db954?text=Ipamorelin",
+    "researchNotes": [
+      "Pentapeptide that selectively binds to ghrelin receptors in the pituitary gland",
+      "Clinical studies show significant GH pulse amplification without desensitization",
+      "Research demonstrates superior selectivity vs. GHRP-2 and GHRP-6 with fewer side effects",
+      "Often combined with CJC-1295 for synergistic GH release protocols",
+      "Studies in elderly subjects show improvements in bone mineral density"
+    ],
+    "suggestedDosage": "200–300 mcg, 2–3 times daily via subcutaneous injection, ideally before sleep and post-workout"
+  },
+  {
+    "id": "cjc-1295",
+    "name": "CJC-1295",
+    "tags": ["Anti-Aging", "Fat Loss", "Muscle Recovery"],
+    "shortDescription": "Long-acting GHRH analogue that provides sustained growth hormone release over days.",
+    "benefits": [
+      "Provides sustained elevation of growth hormone levels",
+      "Increases IGF-1 levels for enhanced cellular repair",
+      "Promotes fat loss, especially visceral fat",
+      "Supports lean muscle mass preservation and growth",
+      "Improves skin thickness and collagen production",
+      "Enhances deep sleep and recovery cycles",
+      "Long half-life allows less frequent dosing"
+    ],
+    "imagePlaceholderUrl": "https://placehold.co/600x400/0a1628/4a9eff?text=CJC-1295",
+    "researchNotes": [
+      "Modified GHRH analogue with DAC (Drug Affinity Complex) extending half-life to 6–8 days",
+      "Phase II clinical trials demonstrated 2–10x increase in mean GH concentrations",
+      "Research shows sustained IGF-1 elevation for up to 28 days after single injection",
+      "Commonly paired with Ipamorelin for amplified pulsatile GH release",
+      "Published in Journal of Clinical Endocrinology & Metabolism"
+    ],
+    "suggestedDosage": "1–2 mg per week subcutaneous injection; often combined with Ipamorelin at 300 mcg per dose"
+  },
+  {
+    "id": "epithalon",
+    "name": "Epithalon",
+    "tags": ["Anti-Aging", "Youthful Skin"],
+    "shortDescription": "Tetrapeptide that activates telomerase to lengthen telomeres and slow cellular aging.",
+    "benefits": [
+      "Activates telomerase enzyme to extend telomere length",
+      "Slows cellular aging at the DNA level",
+      "Improves melatonin production and circadian rhythm",
+      "Enhances antioxidant enzyme activity",
+      "Supports immune system function in aging populations",
+      "May reduce risk of age-related diseases",
+      "Improves skin texture and reduces age spots"
+    ],
+    "imagePlaceholderUrl": "https://placehold.co/600x400/1a3a5c/a0d4ff?text=Epithalon",
+    "researchNotes": [
+      "Discovered by Professor Vladimir Khavinson at the St. Petersburg Institute of Bioregulation",
+      "Studies show telomere elongation in human somatic cells after Epithalon treatment",
+      "Research in Bulletin of Experimental Biology and Medicine demonstrates lifespan extension in animal models",
+      "Clinical studies in elderly patients show normalization of melatonin secretion",
+      "Shown to reduce incidence of spontaneous tumors in aged rats by 2.4x"
+    ],
+    "suggestedDosage": "5–10 mg per day for 10–20 day cycles, 2–3 times per year via subcutaneous injection"
+  },
+  {
+    "id": "ghrp-6",
+    "name": "GHRP-6",
+    "tags": ["Muscle Recovery", "Fat Loss", "Anti-Aging"],
+    "shortDescription": "Growth hormone releasing peptide that stimulates GH secretion and increases appetite.",
+    "benefits": [
+      "Potent stimulation of growth hormone release",
+      "Increases muscle mass and strength",
+      "Promotes fat burning through elevated GH levels",
+      "Stimulates appetite — useful for muscle-building phases",
+      "Supports liver health and IGF-1 production",
+      "Anti-inflammatory properties",
+      "Improves recovery time between training sessions"
+    ],
+    "imagePlaceholderUrl": "https://placehold.co/600x400/0d2b1e/1db954?text=GHRP-6",
+    "researchNotes": [
+      "Hexapeptide that acts on ghrelin receptors in the hypothalamus and pituitary",
+      "Studies show 7–15x increase in GH pulse amplitude vs. baseline",
+      "Research demonstrates significant appetite stimulation via ghrelin pathway activation",
+      "Shown to have cytoprotective effects on cardiac tissue in ischemia models",
+      "Often stacked with GHRH analogues for synergistic GH release"
+    ],
+    "suggestedDosage": "100–300 mcg per injection, 2–3 times daily on an empty stomach via subcutaneous injection"
+  },
+  {
+    "id": "pt-141",
+    "name": "PT-141 (Bremelanotide)",
+    "tags": ["Anti-Aging"],
+    "shortDescription": "Melanocortin receptor agonist that enhances libido and sexual function in men and women.",
+    "benefits": [
+      "Increases sexual desire and libido in both sexes",
+      "Improves erectile function in men",
+      "Enhances arousal and sexual satisfaction in women",
+      "Acts centrally on the nervous system, not vascular system",
+      "FDA-approved (Vyleesi) for hypoactive sexual desire disorder in women",
+      "May improve mood and energy levels",
+      "Rapid onset of action within 45–60 minutes"
+    ],
+    "imagePlaceholderUrl": "https://placehold.co/600x400/1a3a5c/a0d4ff?text=PT-141",
+    "researchNotes": [
+      "Cyclic heptapeptide analogue of alpha-MSH acting on MC3R and MC4R receptors",
+      "FDA approved as Vyleesi (bremelanotide) for premenopausal women with HSDD in 2019",
+      "Clinical trials showed significant improvement in sexual desire scores vs. placebo",
+      "Unlike PDE5 inhibitors, works via CNS pathway independent of sexual stimulation",
+      "Phase II trials demonstrated efficacy in men with erectile dysfunction"
+    ],
+    "suggestedDosage": "1–2 mg subcutaneous injection 45–60 minutes before sexual activity; maximum 1 dose per 24 hours"
+  },
+  {
+    "id": "collagen-peptides",
+    "name": "Collagen Peptides (Type I & III)",
+    "tags": ["Youthful Skin", "Anti-Aging", "Muscle Recovery"],
+    "shortDescription": "Hydrolyzed collagen fragments that stimulate skin, joint, and connective tissue regeneration.",
+    "benefits": [
+      "Improves skin elasticity, hydration, and reduces wrinkles",
+      "Supports joint cartilage health and reduces joint pain",
+      "Strengthens hair and nails",
+      "Promotes gut lining integrity",
+      "Supports tendon and ligament strength",
+      "Provides glycine and proline for collagen synthesis",
+      "Reduces visible signs of skin aging"
+    ],
+    "imagePlaceholderUrl": "https://placehold.co/600x400/0d2b1e/1db954?text=Collagen+Peptides",
+    "researchNotes": [
+      "Hydrolyzed collagen peptides are absorbed as di- and tripeptides and accumulate in skin dermis",
+      "Randomized controlled trial in Skin Pharmacology and Physiology showed 20% reduction in eye wrinkle depth",
+      "Research demonstrates stimulation of fibroblast collagen and elastin production",
+      "Studies show 40% reduction in joint pain in athletes after 24 weeks of supplementation",
+      "Bioavailability studies confirm peptide absorption and tissue-specific accumulation"
+    ],
+    "suggestedDosage": "10–20 g per day orally, mixed in liquid; best taken with Vitamin C to support collagen synthesis"
+  },
+  {
+    "id": "ghk-cu",
+    "name": "GHK-Cu (Copper Peptide)",
+    "tags": ["Youthful Skin", "Anti-Aging", "Muscle Recovery"],
+    "shortDescription": "Naturally occurring copper-binding peptide with powerful skin regeneration and anti-aging properties.",
+    "benefits": [
+      "Stimulates collagen and elastin production in skin",
+      "Promotes wound healing and skin regeneration",
+      "Reduces fine lines, wrinkles, and skin laxity",
+      "Antioxidant and anti-inflammatory properties",
+      "Stimulates hair follicle growth and reduces hair loss",
+      "Supports nerve regeneration",
+      "Remodels damaged skin and scar tissue"
+    ],
+    "imagePlaceholderUrl": "https://placehold.co/600x400/0a1628/4a9eff?text=GHK-Cu",
+    "researchNotes": [
+      "Tripeptide Gly-His-Lys naturally found in human plasma, saliva, and urine",
+      "Research by Dr. Loren Pickart demonstrates broad tissue remodeling and repair activity",
+      "Studies show GHK-Cu activates over 4,000 human genes involved in tissue repair",
+      "Clinical studies demonstrate significant improvement in skin density and thickness",
+      "Research shows stimulation of VEGF and FGF for angiogenesis and tissue repair"
+    ],
+    "suggestedDosage": "Topical: 1–5% concentration in serum or cream applied twice daily. Injectable: 1–2 mg subcutaneous 2–3x per week"
+  },
+  {
+    "id": "sermorelin",
+    "name": "Sermorelin",
+    "tags": ["Anti-Aging", "Fat Loss", "Muscle Recovery"],
+    "shortDescription": "GHRH analogue that stimulates the pituitary to naturally produce and release growth hormone.",
+    "benefits": [
+      "Stimulates natural pituitary GH production",
+      "Improves body composition — reduces fat, increases lean mass",
+      "Enhances energy levels and vitality",
+      "Improves sleep quality and duration",
+      "Supports bone density maintenance",
+      "Improves skin tone and reduces wrinkles",
+      "FDA-approved history with established safety profile"
+    ],
+    "imagePlaceholderUrl": "https://placehold.co/600x400/1a3a5c/a0d4ff?text=Sermorelin",
+    "researchNotes": [
+      "29-amino acid analogue of endogenous GHRH (1-44), the shortest fragment with full biological activity",
+      "Previously FDA-approved as Geref for GH deficiency in children before being discontinued commercially",
+      "Clinical studies show restoration of youthful GH secretion patterns in adults over 40",
+      "Research demonstrates improvements in body composition comparable to exogenous HGH with better safety profile",
+      "Studies show normalization of IGF-1 levels in GH-deficient adults after 3–6 months of therapy"
+    ],
+    "suggestedDosage": "200–500 mcg subcutaneous injection before bedtime, 5 days on / 2 days off cycling protocol"
+  }
+]

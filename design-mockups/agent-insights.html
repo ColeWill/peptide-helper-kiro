@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agent Insights — PeptideHelper Internal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --color-bg-primary: #0a1628;
+        --color-bg-secondary: #0d2b1e;
+        --color-bg-card: #0f1f35;
+        --color-accent: #1db954;
+        --color-accent-hover: #17a349;
+        --color-blue-mid: #1a3a5c;
+        --color-blue-bright: #4a9eff;
+        --color-amber: #f59e0b;
+        --color-amber-bg: rgba(245, 158, 11, 0.12);
+        --color-text-primary: #f0f4f0;
+        --color-text-secondary: #a0b0a8;
+        --color-border: #1e3a52;
+        --font-family: "Inter", system-ui, sans-serif;
+        --font-size-label: 12px;
+        --font-size-body: 16px;
+        --font-size-heading-sm: 20px;
+        --font-size-heading-lg: 36px;
+        --font-weight-normal: 400;
+        --font-weight-medium: 500;
+        --font-weight-semibold: 600;
+        --font-weight-bold: 700;
+        --space-1: 4px;
+        --space-2: 8px;
+        --space-3: 12px;
+        --space-4: 16px;
+        --space-6: 24px;
+        --space-8: 32px;
+        --space-12: 48px;
+        --space-16: 64px;
+        --radius-sm: 4px;
+        --radius-md: 8px;
+        --radius-pill: 9999px;
+        --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: var(--font-family);
+        font-size: var(--font-size-body);
+        color: var(--color-text-primary);
+        background: var(--color-bg-primary);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* INTERNAL BANNER */
+      .internal-banner {
+        background: var(--color-amber-bg);
+        border-bottom: 1px solid var(--color-amber);
+        padding: var(--space-2) var(--space-8);
+        text-align: center;
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-amber);
+        letter-spacing: 0.06em;
+      }
+
+      /* NAV */
+      .nav {
+        background: rgba(10, 22, 40, 0.95);
+        border-bottom: 1px solid var(--color-border);
+        padding: var(--space-4) var(--space-8);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav-logo {
+        font-size: var(--font-size-heading-sm);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-accent);
+      }
+      .nav-logo span {
+        color: var(--color-text-primary);
+      }
+      .nav-links {
+        display: flex;
+        gap: var(--space-6);
+      }
+      .nav-links a {
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-medium);
+        color: var(--color-text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--color-accent);
+      }
+
+      /* PAGE HEADER */
+      .page-header {
+        background: linear-gradient(
+          135deg,
+          var(--color-bg-secondary) 0%,
+          var(--color-bg-primary) 100%
+        );
+        padding: var(--space-12) var(--space-8);
+        border-bottom: 1px solid var(--color-border);
+      }
+      .page-header-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .page-eyebrow {
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-amber);
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin-bottom: var(--space-2);
+      }
+      .page-title {
+        font-size: var(--font-size-heading-lg);
+        font-weight: var(--font-weight-bold);
+        margin-bottom: var(--space-2);
+      }
+      .page-subtitle {
+        color: var(--color-text-secondary);
+        max-width: 560px;
+      }
+
+      /* MAIN */
+      .main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: var(--space-8);
+      }
+
+      /* SECTION HEADER */
+      .section-header {
+        margin-bottom: var(--space-6);
+      }
+      .section-title {
+        font-size: var(--font-size-heading-sm);
+        font-weight: var(--font-weight-bold);
+        margin-bottom: var(--space-1);
+      }
+      .section-desc {
+        font-size: var(--font-size-label);
+        color: var(--color-text-secondary);
+      }
+      .divider {
+        border: none;
+        border-top: 1px solid var(--color-border);
+        margin: var(--space-8) 0;
+      }
+
+      /* AGENT CARDS */
+      .agents-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: var(--space-6);
+        margin-bottom: var(--space-8);
+      }
+      .agent-card {
+        background: var(--color-bg-card);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .agent-card:hover {
+        border-color: var(--color-accent);
+        box-shadow: var(--shadow-card);
+      }
+      .agent-card-header {
+        padding: var(--space-4) var(--space-6);
+        background: linear-gradient(
+          135deg,
+          var(--color-bg-secondary),
+          var(--color-blue-mid)
+        );
+        border-bottom: 1px solid var(--color-border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .agent-name {
+        font-size: var(--font-size-heading-sm);
+        font-weight: var(--font-weight-bold);
+      }
+      .status-badge {
+        font-size: 10px;
+        font-weight: var(--font-weight-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 3px var(--space-2);
+        border-radius: var(--radius-pill);
+      }
+      .status-completed {
+        background: rgba(29, 185, 84, 0.2);
+        color: var(--color-accent);
+      }
+      .status-in-progress {
+        background: rgba(74, 158, 255, 0.2);
+        color: var(--color-blue-bright);
+      }
+      .status-pending {
+        background: rgba(160, 176, 168, 0.15);
+        color: var(--color-text-secondary);
+      }
+      .status-blocked {
+        background: rgba(232, 93, 4, 0.2);
+        color: #e85d04;
+      }
+      .agent-card-body {
+        padding: var(--space-4) var(--space-6);
+      }
+      .agent-desc {
+        font-size: 14px;
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-4);
+        line-height: 1.6;
+      }
+      .current-task-label {
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--color-accent);
+        margin-bottom: var(--space-2);
+      }
+      .current-task-value {
+        font-size: 14px;
+        color: var(--color-text-primary);
+        background: var(--color-bg-primary);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        padding: var(--space-2) var(--space-3);
+      }
+
+      /* FLOWCHART */
+      .flowchart-section {
+        margin-bottom: var(--space-8);
+      }
+      .flowchart-container {
+        background: var(--color-bg-card);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: var(--space-6);
+        overflow-x: auto;
+      }
+      .flowchart-title {
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+        margin-bottom: var(--space-4);
+      }
+      svg.flowchart {
+        display: block;
+        min-width: 600px;
+      }
+
+      /* NODE DETAIL PANEL */
+      .node-panel {
+        display: none;
+        background: var(--color-bg-primary);
+        border: 1px solid var(--color-accent);
+        border-radius: var(--radius-md);
+        padding: var(--space-4) var(--space-6);
+        margin-top: var(--space-4);
+        animation: fadeIn 0.2s ease;
+      }
+      .node-panel.visible {
+        display: block;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(4px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .node-panel-title {
+        font-size: var(--font-size-heading-sm);
+        font-weight: var(--font-weight-bold);
+        margin-bottom: var(--space-2);
+      }
+      .node-panel-desc {
+        font-size: 14px;
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-3);
+      }
+      .node-panel-close {
+        float: right;
+        cursor: pointer;
+        color: var(--color-text-secondary);
+        font-size: 18px;
+        line-height: 1;
+      }
+      .node-panel-close:hover {
+        color: var(--color-accent);
+      }
+
+      /* TASK HISTORY */
+      .history-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .history-table th {
+        text-align: left;
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--color-text-secondary);
+        padding: var(--space-2) var(--space-4);
+        border-bottom: 1px solid var(--color-border);
+      }
+      .history-table td {
+        padding: var(--space-3) var(--space-4);
+        border-bottom: 1px solid var(--color-border);
+        font-size: 14px;
+        vertical-align: top;
+      }
+      .history-table tr:last-child td {
+        border-bottom: none;
+      }
+      .history-table tr:hover td {
+        background: var(--color-bg-card);
+      }
+      .history-agent {
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-accent);
+      }
+      .history-task {
+        color: var(--color-text-primary);
+      }
+      .history-date {
+        color: var(--color-text-secondary);
+        white-space: nowrap;
+      }
+
+      /* FOOTER */
+      .footer {
+        border-top: 1px solid var(--color-border);
+        padding: var(--space-8);
+        text-align: center;
+        color: var(--color-text-secondary);
+        font-size: var(--font-size-label);
+      }
+      .footer a {
+        color: var(--color-accent);
+      }
+
+      @media (max-width: 767px) {
+        .nav {
+          padding: var(--space-3) var(--space-4);
+        }
+        .nav-links {
+          display: none;
+        }
+        .page-header {
+          padding: var(--space-8) var(--space-4);
+        }
+        .page-title {
+          font-size: var(--font-size-heading-sm);
+        }
+        .main {
+          padding: var(--space-4);
+        }
+        .agents-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="internal-banner">
+      ⚠ Internal Tool — Not part of the public app
+    </div>
+
+    <nav class="nav">
+      <div class="nav-logo">Peptide<span>Helper</span></div>
+      <div class="nav-links">
+        <a href="index.html">Explore</a>
+        <a href="detail.html">Detail View</a>
+        <a href="agent-insights.html" class="active">Agent Insights</a>
+        <a href="completed-specs.html">Completed Specs</a>
+      </div>
+    </nav>
+
+    <div class="page-header">
+      <div class="page-header-inner">
+        <p class="page-eyebrow">Internal Dashboard</p>
+        <h1 class="page-title">Agent Insights</h1>
+        <p class="page-subtitle">
+          Live view of all Kiro agents, their current task status, flowcharts,
+          and task history for the PeptideHelper project.
+        </p>
+      </div>
+    </div>
+
+    <main class="main">
+      <!-- AGENT STATUS CARDS -->
+      <div class="section-header">
+        <h2 class="section-title">Agent Status</h2>
+        <p class="section-desc">
+          Current task and status for each agent in the project.
+        </p>
+      </div>
+      <div class="agents-grid" id="agentsGrid"></div>
+
+      <hr class="divider" />
+
+      <!-- FLOWCHARTS -->
+      <div class="section-header">
+        <h2 class="section-title">Agent Flowcharts</h2>
+        <p class="section-desc">
+          Click any node to see agent details and current status.
+        </p>
+      </div>
+      <div class="flowchart-section">
+        <div class="flowchart-container">
+          <div class="flowchart-title">UX Design Phase — Agent Flow</div>
+          <svg
+            class="flowchart"
+            viewBox="0 0 700 260"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <marker
+                id="arrow"
+                markerWidth="8"
+                markerHeight="8"
+                refX="6"
+                refY="3"
+                orient="auto"
+              >
+                <path d="M0,0 L0,6 L8,3 z" fill="#4a9eff" />
+              </marker>
+            </defs>
+            <!-- Connections -->
+            <line
+              x1="130"
+              y1="80"
+              x2="230"
+              y2="80"
+              stroke="#4a9eff"
+              stroke-width="1.5"
+              marker-end="url(#arrow)"
+            />
+            <line
+              x1="370"
+              y1="80"
+              x2="470"
+              y2="80"
+              stroke="#4a9eff"
+              stroke-width="1.5"
+              marker-end="url(#arrow)"
+            />
+            <line
+              x1="300"
+              y1="110"
+              x2="300"
+              y2="160"
+              stroke="#4a9eff"
+              stroke-width="1.5"
+              marker-end="url(#arrow)"
+            />
+            <line
+              x1="300"
+              y1="200"
+              x2="300"
+              y2="230"
+              stroke="#1db954"
+              stroke-width="1.5"
+              stroke-dasharray="4,3"
+              marker-end="url(#arrow)"
+            />
+            <!-- Nodes -->
+            <g
+              class="flow-node"
+              data-agent="requirements-agent"
+              style="cursor: pointer"
+            >
+              <rect
+                x="10"
+                y="55"
+                width="120"
+                height="50"
+                rx="8"
+                fill="#0f1f35"
+                stroke="#1db954"
+                stroke-width="1.5"
+              />
+              <text
+                x="70"
+                y="76"
+                text-anchor="middle"
+                fill="#f0f4f0"
+                font-size="11"
+                font-family="Inter,sans-serif"
+                font-weight="600"
+              >
+                Requirements
+              </text>
+              <text
+                x="70"
+                y="92"
+                text-anchor="middle"
+                fill="#1db954"
+                font-size="10"
+                font-family="Inter,sans-serif"
+              >
+                Agent
+              </text>
+              <circle cx="108" cy="62" r="5" fill="#1db954" />
+            </g>
+            <g
+              class="flow-node"
+              data-agent="design-agent"
+              style="cursor: pointer"
+            >
+              <rect
+                x="230"
+                y="55"
+                width="140"
+                height="50"
+                rx="8"
+                fill="#0f1f35"
+                stroke="#4a9eff"
+                stroke-width="1.5"
+              />
+              <text
+                x="300"
+                y="76"
+                text-anchor="middle"
+                fill="#f0f4f0"
+                font-size="11"
+                font-family="Inter,sans-serif"
+                font-weight="600"
+              >
+                UX Design
+              </text>
+              <text
+                x="300"
+                y="92"
+                text-anchor="middle"
+                fill="#4a9eff"
+                font-size="10"
+                font-family="Inter,sans-serif"
+              >
+                Mockup Agent
+              </text>
+              <circle cx="358" cy="62" r="5" fill="#4a9eff" />
+            </g>
+            <g
+              class="flow-node"
+              data-agent="data-agent"
+              style="cursor: pointer"
+            >
+              <rect
+                x="470"
+                y="55"
+                width="120"
+                height="50"
+                rx="8"
+                fill="#0f1f35"
+                stroke="#7b2d8b"
+                stroke-width="1.5"
+              />
+              <text
+                x="530"
+                y="76"
+                text-anchor="middle"
+                fill="#f0f4f0"
+                font-size="11"
+                font-family="Inter,sans-serif"
+                font-weight="600"
+              >
+                Data
+              </text>
+              <text
+                x="530"
+                y="92"
+                text-anchor="middle"
+                fill="#c084fc"
+                font-size="10"
+                font-family="Inter,sans-serif"
+              >
+                Seed Agent
+              </text>
+              <circle cx="578" cy="62" r="5" fill="#7b2d8b" />
+            </g>
+            <g
+              class="flow-node"
+              data-agent="review-agent"
+              style="cursor: pointer"
+            >
+              <rect
+                x="230"
+                y="160"
+                width="140"
+                height="50"
+                rx="8"
+                fill="#0f1f35"
+                stroke="#f59e0b"
+                stroke-width="1.5"
+              />
+              <text
+                x="300"
+                y="181"
+                text-anchor="middle"
+                fill="#f0f4f0"
+                font-size="11"
+                font-family="Inter,sans-serif"
+                font-weight="600"
+              >
+                Human Review
+              </text>
+              <text
+                x="300"
+                y="197"
+                text-anchor="middle"
+                fill="#f59e0b"
+                font-size="10"
+                font-family="Inter,sans-serif"
+              >
+                Approval Gate
+              </text>
+              <circle cx="358" cy="167" r="5" fill="#f59e0b" />
+            </g>
+            <g
+              class="flow-node"
+              data-agent="react-agent"
+              style="cursor: pointer"
+            >
+              <rect
+                x="230"
+                y="230"
+                width="140"
+                height="20"
+                rx="6"
+                fill="#1a3a5c"
+                stroke="#1e3a52"
+                stroke-width="1"
+                stroke-dasharray="4,3"
+              />
+              <text
+                x="300"
+                y="244"
+                text-anchor="middle"
+                fill="#a0b0a8"
+                font-size="10"
+                font-family="Inter,sans-serif"
+              >
+                React Implementation (pending)
+              </text>
+            </g>
+          </svg>
+          <div class="node-panel" id="nodePanel">
+            <span class="node-panel-close" id="nodePanelClose">✕</span>
+            <div class="node-panel-title" id="nodePanelTitle"></div>
+            <div class="node-panel-desc" id="nodePanelDesc"></div>
+            <div id="nodePanelStatus"></div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- TASK HISTORY -->
+      <div class="section-header">
+        <h2 class="section-title">Past Task History</h2>
+        <p class="section-desc">
+          All completed tasks across agents, most recent first.
+        </p>
+      </div>
+      <div
+        style="
+          background: var(--color-bg-card);
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-md);
+          overflow: hidden;
+        "
+      >
+        <table class="history-table" id="historyTable">
+          <thead>
+            <tr>
+              <th>Agent</th>
+              <th>Task</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="historyBody"></tbody>
+        </table>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>
+        PeptideHelper Internal Tools &copy; 2026 —
+        <a href="index.html">Back to App</a>
+      </p>
+    </footer>
+  </body>
+</html>
+
+  <script>
+    /* ============================================================
+       AGENT DATA (seed — updated as project progresses)
+       ============================================================ */
+    const AGENTS = [
+      {
+        id: "requirements-agent",
+        name: "Requirements Agent",
+        description: "Gathers and documents project requirements using EARS-pattern acceptance criteria and INCOSE-compliant language.",
+        currentTask: "Requirements document complete for peptide-helper-ux-design",
+        status: "Completed",
+        history: [
+          { task: "Created requirements.md for peptide-helper-ux-design", date: "2026-05-28" },
+          { task: "Ran automatic requirements detailing pass (9 requirements)", date: "2026-05-28" }
+        ]
+      },
+      {
+        id: "design-agent",
+        name: "UX Design Mockup Agent",
+        description: "Produces static single-file HTML/CSS/JS mockups for all pages in the design system.",
+        currentTask: "Building index.html, detail.html, agent-insights.html, completed-specs.html",
+        status: "In Progress",
+        history: [
+          { task: "Created /src/data/peptides.json with 10 real peptides", date: "2026-05-28" }
+        ]
+      },
+      {
+        id: "data-agent",
+        name: "Data Seed Agent",
+        description: "Generates and validates the peptides.json data file with real peptide research data.",
+        currentTask: "peptides.json created and validated (10 peptides)",
+        status: "Completed",
+        history: [
+          { task: "Generated 10 peptide objects with all required fields", date: "2026-05-28" },
+          { task: "Validated field constraints (id uniqueness, URL format, tag membership)", date: "2026-05-28" }
+        ]
+      },
+      {
+        id: "review-agent",
+        name: "Human Review Gate",
+        description: "Awaits explicit human approval of all mockups before React implementation begins.",
+        currentTask: "Awaiting human sign-off on design mockups",
+        status: "Pending",
+        history: []
+      },
+      {
+        id: "react-agent",
+        name: "React Implementation Agent",
+        description: "Converts approved mockups into production React components. Blocked until approval gate passes.",
+        currentTask: "Blocked — awaiting design approval",
+        status: "Blocked",
+        history: []
+      }
+    ];
+
+    const NODE_INFO = {
+      "requirements-agent": { title: "Requirements Agent", desc: "Produces EARS-pattern requirements documents. Completed requirements.md for this project.", status: "Completed" },
+      "design-agent":       { title: "UX Design Mockup Agent", desc: "Building all 4 HTML mockup files with dark health-tech theme, responsive layout, and interactive JS.", status: "In Progress" },
+      "data-agent":         { title: "Data Seed Agent", desc: "Generated /src/data/peptides.json with 10 validated real peptide objects.", status: "Completed" },
+      "review-agent":       { title: "Human Review Gate", desc: "Approval gate — all mockups must be reviewed and signed off before React work begins.", status: "Pending" },
+      "react-agent":        { title: "React Implementation Agent", desc: "Will convert approved mockups into React components. Currently blocked pending design approval.", status: "Blocked" }
+    };
+
+    /* ============================================================
+       RENDER AGENT CARDS
+       ============================================================ */
+    function statusClass(s) {
+      return 'status-badge status-' + s.toLowerCase().replace(/\s+/g, '-');
+    }
+
+    const grid = document.getElementById('agentsGrid');
+    AGENTS.forEach(a => {
+      const card = document.createElement('div');
+      card.className = 'agent-card';
+      card.innerHTML = `
+        <div class="agent-card-header">
+          <span class="agent-name">${a.name}</span>
+          <span class="${statusClass(a.status)}">${a.status}</span>
+        </div>
+        <div class="agent-card-body">
+          <p class="agent-desc">${a.description}</p>
+          <div class="current-task-label">Current Task</div>
+          <div class="current-task-value">${a.currentTask}</div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    /* ============================================================
+       RENDER HISTORY TABLE
+       ============================================================ */
+    const tbody = document.getElementById('historyBody');
+    const allHistory = [];
+    AGENTS.forEach(a => {
+      a.history.forEach(h => allHistory.push({ agent: a.name, ...h, status: 'Completed' }));
+    });
+    allHistory.sort((a, b) => b.date.localeCompare(a.date));
+    allHistory.forEach(h => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="history-agent">${h.agent}</td>
+        <td class="history-task">${h.task}</td>
+        <td><span class="status-badge status-completed">${h.status}</span></td>
+        <td class="history-date">${h.date}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+    if (allHistory.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--color-text-secondary);padding:32px">No task history yet.</td></tr>';
+    }
+
+    /* ============================================================
+       FLOWCHART NODE CLICKS
+       ============================================================ */
+    document.querySelectorAll('.flow-node').forEach(node => {
+      node.addEventListener('click', () => {
+        const id = node.dataset.agent;
+        const info = NODE_INFO[id];
+        if (!info) return;
+        document.getElementById('nodePanelTitle').textContent = info.title;
+        document.getElementById('nodePanelDesc').textContent = info.desc;
+        document.getElementById('nodePanelStatus').innerHTML = `<span class="${statusClass(info.status)}" style="margin-top:8px;display:inline-block">${info.status}</span>`;
+        document.getElementById('nodePanel').classList.add('visible');
+      });
+    });
+    document.getElementById('nodePanelClose').addEventListener('click', () => {
+      document.getElementById('nodePanel').classList.remove('visible');
+    });
+  </script>
+</body>
+</html>

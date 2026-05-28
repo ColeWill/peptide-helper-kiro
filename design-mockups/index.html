@@ -1,0 +1,983 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PeptideHelper — Explore Peptides</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ============================================================
+       DESIGN SYSTEM — single source of truth
+       ============================================================ */
+      :root {
+        /* Colours */
+        --color-bg-primary: #0a1628;
+        --color-bg-secondary: #0d2b1e;
+        --color-bg-card: #0f1f35;
+        --color-bg-modal: #0d1e30;
+        --color-accent: #1db954;
+        --color-accent-hover: #17a349;
+        --color-blue-mid: #1a3a5c;
+        --color-blue-bright: #4a9eff;
+        --color-text-primary: #f0f4f0;
+        --color-text-secondary: #a0b0a8;
+        --color-border: #1e3a52;
+        --color-overlay: rgba(0, 0, 0, 0.75);
+
+        /* Tag colours */
+        --tag-fat-loss: #e85d04;
+        --tag-anti-aging: #7b2d8b;
+        --tag-youthful-skin: #0077b6;
+        --tag-muscle-recovery: #1db954;
+
+        /* Typography */
+        --font-family: "Inter", system-ui, sans-serif;
+        --font-size-label: 12px;
+        --font-size-body: 16px;
+        --font-size-heading-sm: 20px;
+        --font-size-heading-lg: 36px;
+        --font-weight-normal: 400;
+        --font-weight-medium: 500;
+        --font-weight-semibold: 600;
+        --font-weight-bold: 700;
+
+        /* Spacing */
+        --space-1: 4px;
+        --space-2: 8px;
+        --space-3: 12px;
+        --space-4: 16px;
+        --space-6: 24px;
+        --space-8: 32px;
+        --space-12: 48px;
+        --space-16: 64px;
+
+        /* Radii */
+        --radius-sm: 4px;
+        --radius-md: 8px;
+        --radius-pill: 9999px;
+
+        /* Shadows */
+        --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+        --shadow-modal: 0 24px 80px rgba(0, 0, 0, 0.7);
+      }
+
+      /* ============================================================
+       RESET & BASE
+       ============================================================ */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--font-family);
+        font-size: var(--font-size-body);
+        color: var(--color-text-primary);
+        background-color: var(--color-bg-primary);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      button {
+        cursor: pointer;
+        border: none;
+        background: none;
+        font-family: inherit;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* ============================================================
+       NAV
+       ============================================================ */
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 22, 40, 0.92);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--color-border);
+        padding: var(--space-4) var(--space-8);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav-logo {
+        font-size: var(--font-size-heading-sm);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-accent);
+        letter-spacing: -0.5px;
+      }
+      .nav-logo span {
+        color: var(--color-text-primary);
+      }
+      .nav-links {
+        display: flex;
+        gap: var(--space-6);
+      }
+      .nav-links a {
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-medium);
+        color: var(--color-text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--color-accent);
+      }
+
+      /* ============================================================
+       HERO
+       ============================================================ */
+      .hero {
+        background: linear-gradient(
+          135deg,
+          var(--color-bg-secondary) 0%,
+          var(--color-bg-primary) 60%,
+          var(--color-blue-mid) 100%
+        );
+        padding: var(--space-16) var(--space-8);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse at 50% 0%,
+          rgba(29, 185, 84, 0.12) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .hero-eyebrow {
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-accent);
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin-bottom: var(--space-4);
+      }
+      .hero-title {
+        font-size: var(--font-size-heading-lg);
+        font-weight: var(--font-weight-bold);
+        line-height: 1.15;
+        margin-bottom: var(--space-4);
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hero-title em {
+        font-style: normal;
+        color: var(--color-accent);
+      }
+      .hero-subtitle {
+        font-size: var(--font-size-body);
+        color: var(--color-text-secondary);
+        max-width: 520px;
+        margin: 0 auto var(--space-8);
+      }
+      .hero-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        background: var(--color-accent);
+        color: var(--color-bg-primary);
+        font-weight: var(--font-weight-semibold);
+        font-size: var(--font-size-body);
+        padding: var(--space-3) var(--space-8);
+        border-radius: var(--radius-pill);
+        transition:
+          background 0.2s,
+          transform 0.15s;
+      }
+      .hero-cta:hover {
+        background: var(--color-accent-hover);
+        transform: translateY(-1px);
+      }
+
+      /* ============================================================
+       FILTER + SEARCH BAR
+       ============================================================ */
+      .controls {
+        background: var(--color-bg-primary);
+        padding: var(--space-6) var(--space-8);
+        border-bottom: 1px solid var(--color-border);
+        position: sticky;
+        top: 57px;
+        z-index: 90;
+      }
+      .search-wrap {
+        position: relative;
+        max-width: 480px;
+        margin: 0 auto var(--space-4);
+      }
+      .search-icon {
+        position: absolute;
+        left: var(--space-4);
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--color-text-secondary);
+        pointer-events: none;
+      }
+      .search-input {
+        width: 100%;
+        background: var(--color-bg-card);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-pill);
+        color: var(--color-text-primary);
+        font-family: var(--font-family);
+        font-size: var(--font-size-body);
+        padding: var(--space-3) var(--space-4) var(--space-3) 44px;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .search-input::placeholder {
+        color: var(--color-text-secondary);
+      }
+      .search-input:focus {
+        border-color: var(--color-accent);
+      }
+      .filter-bar {
+        display: flex;
+        gap: var(--space-2);
+        overflow-x: auto;
+        scrollbar-width: none;
+        padding-bottom: var(--space-1);
+        justify-content: center;
+      }
+      .filter-bar::-webkit-scrollbar {
+        display: none;
+      }
+      .filter-btn {
+        flex-shrink: 0;
+        padding: var(--space-2) var(--space-4);
+        border-radius: var(--radius-pill);
+        border: 1.5px solid var(--color-border);
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-text-primary);
+        background: transparent;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        transition: all 0.2s;
+      }
+      .filter-btn:hover {
+        border-color: var(--color-accent);
+        color: var(--color-accent);
+      }
+      .filter-btn.active {
+        background: var(--color-accent);
+        border-color: var(--color-accent);
+        color: var(--color-bg-primary);
+      }
+
+      /* ============================================================
+       CARD GRID
+       ============================================================ */
+      .grid-section {
+        padding: var(--space-8);
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+      .grid-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--space-6);
+      }
+      .grid-count {
+        font-size: var(--font-size-label);
+        color: var(--color-text-secondary);
+        font-weight: var(--font-weight-medium);
+      }
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: var(--space-6);
+      }
+      .peptide-card {
+        background: var(--color-bg-card);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        cursor: pointer;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s,
+          border-color 0.2s;
+        display: flex;
+        flex-direction: column;
+      }
+      .peptide-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-card);
+        border-color: var(--color-accent);
+      }
+      .card-img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        background: var(--color-blue-mid);
+      }
+      .card-body {
+        padding: var(--space-4);
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      .card-name {
+        font-size: var(--font-size-heading-sm);
+        font-weight: var(--font-weight-bold);
+        margin-bottom: var(--space-2);
+        line-height: 1.2;
+      }
+      .card-tagline {
+        font-size: var(--font-size-label);
+        color: var(--color-text-secondary);
+        line-height: 1.5;
+        flex: 1;
+        margin-bottom: var(--space-4);
+      }
+      .card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-1);
+      }
+      .tag {
+        font-size: 10px;
+        font-weight: var(--font-weight-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 3px var(--space-2);
+        border-radius: var(--radius-pill);
+        color: #fff;
+      }
+      .tag-fat-loss {
+        background: var(--tag-fat-loss);
+      }
+      .tag-anti-aging {
+        background: var(--tag-anti-aging);
+      }
+      .tag-youthful-skin {
+        background: var(--tag-youthful-skin);
+      }
+      .tag-muscle-recovery {
+        background: var(--tag-muscle-recovery);
+        color: var(--color-bg-primary);
+      }
+
+      /* No results */
+      .no-results {
+        text-align: center;
+        padding: var(--space-16) var(--space-8);
+        color: var(--color-text-secondary);
+        display: none;
+      }
+      .no-results.visible {
+        display: block;
+      }
+      .no-results-icon {
+        font-size: 48px;
+        margin-bottom: var(--space-4);
+      }
+      .no-results h3 {
+        font-size: var(--font-size-heading-sm);
+        margin-bottom: var(--space-2);
+        color: var(--color-text-primary);
+      }
+
+      /* ============================================================
+       MODAL
+       ============================================================ */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: var(--color-overlay);
+        backdrop-filter: blur(4px);
+        align-items: center;
+        justify-content: center;
+        padding: var(--space-8);
+      }
+      .modal-overlay.open {
+        display: flex;
+      }
+      .modal {
+        background: var(--color-bg-modal);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-modal);
+        max-width: 760px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        animation: modalIn 0.25s ease;
+      }
+      @keyframes modalIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px) scale(0.97);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      .modal-close {
+        position: absolute;
+        top: var(--space-4);
+        right: var(--space-4);
+        width: 36px;
+        height: 36px;
+        background: var(--color-bg-card);
+        border: 1px solid var(--color-border);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: var(--color-text-secondary);
+        transition: all 0.2s;
+        z-index: 10;
+      }
+      .modal-close:hover {
+        background: var(--color-accent);
+        color: var(--color-bg-primary);
+        border-color: var(--color-accent);
+      }
+      .modal-img {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+        border-radius: var(--radius-md) var(--radius-md) 0 0;
+      }
+      .modal-body {
+        padding: var(--space-6);
+      }
+      .modal-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-1);
+        margin-bottom: var(--space-4);
+      }
+      .modal-name {
+        font-size: var(--font-size-heading-lg);
+        font-weight: var(--font-weight-bold);
+        margin-bottom: var(--space-2);
+        line-height: 1.15;
+      }
+      .modal-desc {
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-6);
+        line-height: 1.7;
+      }
+      .modal-section {
+        margin-bottom: var(--space-6);
+      }
+      .modal-section-title {
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+        margin-bottom: var(--space-3);
+        padding-bottom: var(--space-2);
+        border-bottom: 1px solid var(--color-border);
+      }
+      .modal-benefits {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+      .modal-benefits li {
+        display: flex;
+        gap: var(--space-2);
+        align-items: flex-start;
+        font-size: var(--font-size-body);
+      }
+      .modal-benefits li::before {
+        content: "✓";
+        color: var(--color-accent);
+        font-weight: bold;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .modal-notes {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+      .modal-note {
+        background: var(--color-bg-card);
+        border-left: 3px solid var(--color-blue-bright);
+        padding: var(--space-3) var(--space-4);
+        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        font-size: 14px;
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+      }
+      .modal-dosage {
+        background: linear-gradient(
+          135deg,
+          var(--color-bg-secondary),
+          var(--color-blue-mid)
+        );
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: var(--space-4);
+        font-size: var(--font-size-body);
+        line-height: 1.6;
+      }
+      .modal-detail-link {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        margin-top: var(--space-4);
+        color: var(--color-accent);
+        font-weight: var(--font-weight-semibold);
+        font-size: var(--font-size-label);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        transition: gap 0.2s;
+      }
+      .modal-detail-link:hover {
+        gap: var(--space-3);
+      }
+
+      /* ============================================================
+       MOBILE DETAIL VIEW (full-page swap)
+       ============================================================ */
+      .mobile-detail {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 300;
+        background: var(--color-bg-primary);
+        overflow-y: auto;
+      }
+      .mobile-detail.open {
+        display: block;
+      }
+      .mobile-detail-back {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-4) var(--space-6);
+        background: var(--color-bg-card);
+        border-bottom: 1px solid var(--color-border);
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-accent);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .mobile-detail-content {
+        padding: var(--space-6);
+      }
+
+      /* ============================================================
+       FOOTER
+       ============================================================ */
+      .footer {
+        border-top: 1px solid var(--color-border);
+        padding: var(--space-8);
+        text-align: center;
+        color: var(--color-text-secondary);
+        font-size: var(--font-size-label);
+      }
+      .footer a {
+        color: var(--color-accent);
+      }
+
+      /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+      @media (max-width: 767px) {
+        .hero {
+          padding: var(--space-12) var(--space-4);
+        }
+        .hero-title {
+          font-size: var(--font-size-heading-sm);
+        }
+        .hero-subtitle {
+          font-size: 14px;
+        }
+        .controls {
+          padding: var(--space-4);
+          top: 53px;
+        }
+        .filter-bar {
+          justify-content: flex-start;
+        }
+        .grid-section {
+          padding: var(--space-4);
+        }
+        .card-grid {
+          grid-template-columns: 1fr;
+        }
+        .nav {
+          padding: var(--space-3) var(--space-4);
+        }
+        .nav-links {
+          display: none;
+        }
+        .modal-overlay {
+          display: none !important;
+        }
+      }
+      @media (min-width: 768px) {
+        .mobile-detail {
+          display: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body></body>
+</html>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">Peptide<span>Helper</span></div>
+  <div class="nav-links">
+    <a href="index.html">Explore</a>
+    <a href="detail.html">Detail View</a>
+    <a href="agent-insights.html">Agent Insights</a>
+    <a href="completed-specs.html">Completed Specs</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">Science-Backed Peptide Research</p>
+  <h1 class="hero-title">Unlock Your Body's <em>Regenerative Potential</em></h1>
+  <p class="hero-subtitle">
+    Explore evidence-based peptide protocols for fat loss, anti-aging, skin
+    health, and muscle recovery.
+  </p>
+  <a href="#explore" class="hero-cta">
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+    >
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.35-4.35" />
+    </svg>
+    Explore Peptides
+  </a>
+</section>
+
+<!-- CONTROLS -->
+<div class="controls" id="explore">
+  <div class="search-wrap">
+    <span class="search-icon">
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.35-4.35" />
+      </svg>
+    </span>
+    <input
+      type="text"
+      class="search-input"
+      id="searchInput"
+      placeholder="Search peptides…"
+      autocomplete="off"
+    />
+  </div>
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-filter="All">All</button>
+    <button class="filter-btn" data-filter="Fat Loss">Fat Loss</button>
+    <button class="filter-btn" data-filter="Anti-Aging">Anti-Aging</button>
+    <button class="filter-btn" data-filter="Youthful Skin">
+      Youthful Skin
+    </button>
+    <button class="filter-btn" data-filter="Muscle Recovery">
+      Muscle Recovery
+    </button>
+  </div>
+</div>
+
+<!-- CARD GRID -->
+<main class="grid-section">
+  <div class="grid-header">
+    <span class="grid-count" id="gridCount"></span>
+  </div>
+  <div class="card-grid" id="cardGrid"></div>
+  <div class="no-results" id="noResults">
+    <div class="no-results-icon">🔬</div>
+    <h3>No peptides found</h3>
+    <p>Try adjusting your search or filter.</p>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>
+    PeptideHelper &copy; 2026 — For research and educational purposes only. Not
+    medical advice.
+  </p>
+  <p style="margin-top: 8px">
+    <a href="agent-insights.html">Agent Insights</a> &nbsp;·&nbsp;
+    <a href="completed-specs.html">Completed Specs</a>
+  </p>
+</footer>
+
+<!-- DESKTOP MODAL -->
+<div
+  class="modal-overlay"
+  id="modalOverlay"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="modalName"
+>
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    <img class="modal-img" id="modalImg" src="" alt="" />
+    <div class="modal-body">
+      <div class="modal-tags" id="modalTags"></div>
+      <h2 class="modal-name" id="modalName"></h2>
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-section">
+        <div class="modal-section-title">Key Benefits</div>
+        <ul class="modal-benefits" id="modalBenefits"></ul>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Research Notes</div>
+        <div class="modal-notes" id="modalNotes"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Suggested Dosage</div>
+        <div class="modal-dosage" id="modalDosage"></div>
+      </div>
+      <a href="detail.html" class="modal-detail-link" id="modalDetailLink"
+        >View Full Detail Page →</a
+      >
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE FULL-PAGE DETAIL -->
+<div class="mobile-detail" id="mobileDetail">
+  <button class="mobile-detail-back" id="mobileBack">
+    ← Back to all peptides
+  </button>
+  <div class="mobile-detail-content" id="mobileDetailContent"></div>
+</div>
+
+  <script>
+    /* ============================================================
+       PEPTIDE DATA (inlined from /src/data/peptides.json)
+       ============================================================ */
+    const PEPTIDES = [
+      { id:"bpc-157", name:"BPC-157", tags:["Muscle Recovery","Anti-Aging"], shortDescription:"Body Protection Compound that accelerates healing of muscles, tendons, and gut tissue.", benefits:["Accelerates tendon and ligament healing","Reduces inflammation in muscle tissue","Supports gut lining repair and leaky gut syndrome","Promotes angiogenesis (new blood vessel formation)","Neuroprotective effects supporting brain health","May reduce pain from injuries and chronic conditions","Supports joint health and cartilage repair"], imagePlaceholderUrl:"https://placehold.co/600x400/0d2b1e/1db954?text=BPC-157", researchNotes:["Derived from a protective protein found in human gastric juice","Multiple rodent studies show accelerated Achilles tendon healing vs. controls","Shown to upregulate growth hormone receptors in tendon fibroblasts","Research published in Journal of Physiology demonstrates gut cytoprotective effects","Currently in Phase II clinical trials for inflammatory bowel disease"], suggestedDosage:"200–500 mcg per day, subcutaneous or intramuscular injection, split into 1–2 doses" },
+      { id:"tb-500", name:"TB-500", tags:["Muscle Recovery","Anti-Aging"], shortDescription:"Synthetic version of Thymosin Beta-4 that promotes tissue repair and reduces inflammation.", benefits:["Promotes systemic tissue repair throughout the body","Reduces acute and chronic inflammation","Improves flexibility and range of motion","Accelerates wound healing and scar reduction","Supports hair regrowth in some studies","Enhances endurance and muscle tone","Cardioprotective effects in cardiac injury models"], imagePlaceholderUrl:"https://placehold.co/600x400/0a1628/4a9eff?text=TB-500", researchNotes:["Thymosin Beta-4 is a naturally occurring 43-amino acid peptide found in all human cells","Studies show TB-500 promotes actin polymerization critical for cell migration and repair","Research in Annals of the New York Academy of Sciences highlights cardiac repair potential","Demonstrated hair follicle stimulation in alopecia research models","Used in veterinary medicine for race horse injury recovery"], suggestedDosage:"2–2.5 mg twice per week for 4–6 weeks loading phase, then 2 mg monthly for maintenance" },
+      { id:"ipamorelin", name:"Ipamorelin", tags:["Anti-Aging","Fat Loss","Muscle Recovery"], shortDescription:"Selective growth hormone secretagogue that stimulates GH release with minimal side effects.", benefits:["Stimulates natural growth hormone release from the pituitary","Promotes lean muscle mass development","Supports fat metabolism and body composition improvement","Improves sleep quality and recovery","Anti-aging effects on skin elasticity and bone density","Minimal impact on cortisol and prolactin levels","Enhances IGF-1 production for cellular repair"], imagePlaceholderUrl:"https://placehold.co/600x400/0d2b1e/1db954?text=Ipamorelin", researchNotes:["Pentapeptide that selectively binds to ghrelin receptors in the pituitary gland","Clinical studies show significant GH pulse amplification without desensitization","Research demonstrates superior selectivity vs. GHRP-2 and GHRP-6 with fewer side effects","Often combined with CJC-1295 for synergistic GH release protocols","Studies in elderly subjects show improvements in bone mineral density"], suggestedDosage:"200–300 mcg, 2–3 times daily via subcutaneous injection, ideally before sleep and post-workout" },
+      { id:"cjc-1295", name:"CJC-1295", tags:["Anti-Aging","Fat Loss","Muscle Recovery"], shortDescription:"Long-acting GHRH analogue that provides sustained growth hormone release over days.", benefits:["Provides sustained elevation of growth hormone levels","Increases IGF-1 levels for enhanced cellular repair","Promotes fat loss, especially visceral fat","Supports lean muscle mass preservation and growth","Improves skin thickness and collagen production","Enhances deep sleep and recovery cycles","Long half-life allows less frequent dosing"], imagePlaceholderUrl:"https://placehold.co/600x400/0a1628/4a9eff?text=CJC-1295", researchNotes:["Modified GHRH analogue with DAC extending half-life to 6–8 days","Phase II clinical trials demonstrated 2–10x increase in mean GH concentrations","Research shows sustained IGF-1 elevation for up to 28 days after single injection","Commonly paired with Ipamorelin for amplified pulsatile GH release","Published in Journal of Clinical Endocrinology & Metabolism"], suggestedDosage:"1–2 mg per week subcutaneous injection; often combined with Ipamorelin at 300 mcg per dose" },
+      { id:"epithalon", name:"Epithalon", tags:["Anti-Aging","Youthful Skin"], shortDescription:"Tetrapeptide that activates telomerase to lengthen telomeres and slow cellular aging.", benefits:["Activates telomerase enzyme to extend telomere length","Slows cellular aging at the DNA level","Improves melatonin production and circadian rhythm","Enhances antioxidant enzyme activity","Supports immune system function in aging populations","May reduce risk of age-related diseases","Improves skin texture and reduces age spots"], imagePlaceholderUrl:"https://placehold.co/600x400/1a3a5c/a0d4ff?text=Epithalon", researchNotes:["Discovered by Professor Vladimir Khavinson at the St. Petersburg Institute of Bioregulation","Studies show telomere elongation in human somatic cells after Epithalon treatment","Research in Bulletin of Experimental Biology and Medicine demonstrates lifespan extension in animal models","Clinical studies in elderly patients show normalization of melatonin secretion","Shown to reduce incidence of spontaneous tumors in aged rats by 2.4x"], suggestedDosage:"5–10 mg per day for 10–20 day cycles, 2–3 times per year via subcutaneous injection" },
+      { id:"ghrp-6", name:"GHRP-6", tags:["Muscle Recovery","Fat Loss","Anti-Aging"], shortDescription:"Growth hormone releasing peptide that stimulates GH secretion and increases appetite.", benefits:["Potent stimulation of growth hormone release","Increases muscle mass and strength","Promotes fat burning through elevated GH levels","Stimulates appetite — useful for muscle-building phases","Supports liver health and IGF-1 production","Anti-inflammatory properties","Improves recovery time between training sessions"], imagePlaceholderUrl:"https://placehold.co/600x400/0d2b1e/1db954?text=GHRP-6", researchNotes:["Hexapeptide that acts on ghrelin receptors in the hypothalamus and pituitary","Studies show 7–15x increase in GH pulse amplitude vs. baseline","Research demonstrates significant appetite stimulation via ghrelin pathway activation","Shown to have cytoprotective effects on cardiac tissue in ischemia models","Often stacked with GHRH analogues for synergistic GH release"], suggestedDosage:"100–300 mcg per injection, 2–3 times daily on an empty stomach via subcutaneous injection" },
+      { id:"pt-141", name:"PT-141 (Bremelanotide)", tags:["Anti-Aging"], shortDescription:"Melanocortin receptor agonist that enhances libido and sexual function in men and women.", benefits:["Increases sexual desire and libido in both sexes","Improves erectile function in men","Enhances arousal and sexual satisfaction in women","Acts centrally on the nervous system, not vascular system","FDA-approved (Vyleesi) for hypoactive sexual desire disorder in women","May improve mood and energy levels","Rapid onset of action within 45–60 minutes"], imagePlaceholderUrl:"https://placehold.co/600x400/1a3a5c/a0d4ff?text=PT-141", researchNotes:["Cyclic heptapeptide analogue of alpha-MSH acting on MC3R and MC4R receptors","FDA approved as Vyleesi (bremelanotide) for premenopausal women with HSDD in 2019","Clinical trials showed significant improvement in sexual desire scores vs. placebo","Unlike PDE5 inhibitors, works via CNS pathway independent of sexual stimulation","Phase II trials demonstrated efficacy in men with erectile dysfunction"], suggestedDosage:"1–2 mg subcutaneous injection 45–60 minutes before sexual activity; maximum 1 dose per 24 hours" },
+      { id:"collagen-peptides", name:"Collagen Peptides (Type I & III)", tags:["Youthful Skin","Anti-Aging","Muscle Recovery"], shortDescription:"Hydrolyzed collagen fragments that stimulate skin, joint, and connective tissue regeneration.", benefits:["Improves skin elasticity, hydration, and reduces wrinkles","Supports joint cartilage health and reduces joint pain","Strengthens hair and nails","Promotes gut lining integrity","Supports tendon and ligament strength","Provides glycine and proline for collagen synthesis","Reduces visible signs of skin aging"], imagePlaceholderUrl:"https://placehold.co/600x400/0d2b1e/1db954?text=Collagen+Peptides", researchNotes:["Hydrolyzed collagen peptides are absorbed as di- and tripeptides and accumulate in skin dermis","Randomized controlled trial in Skin Pharmacology and Physiology showed 20% reduction in eye wrinkle depth","Research demonstrates stimulation of fibroblast collagen and elastin production","Studies show 40% reduction in joint pain in athletes after 24 weeks of supplementation","Bioavailability studies confirm peptide absorption and tissue-specific accumulation"], suggestedDosage:"10–20 g per day orally, mixed in liquid; best taken with Vitamin C to support collagen synthesis" },
+      { id:"ghk-cu", name:"GHK-Cu (Copper Peptide)", tags:["Youthful Skin","Anti-Aging","Muscle Recovery"], shortDescription:"Naturally occurring copper-binding peptide with powerful skin regeneration and anti-aging properties.", benefits:["Stimulates collagen and elastin production in skin","Promotes wound healing and skin regeneration","Reduces fine lines, wrinkles, and skin laxity","Antioxidant and anti-inflammatory properties","Stimulates hair follicle growth and reduces hair loss","Supports nerve regeneration","Remodels damaged skin and scar tissue"], imagePlaceholderUrl:"https://placehold.co/600x400/0a1628/4a9eff?text=GHK-Cu", researchNotes:["Tripeptide Gly-His-Lys naturally found in human plasma, saliva, and urine","Research by Dr. Loren Pickart demonstrates broad tissue remodeling and repair activity","Studies show GHK-Cu activates over 4,000 human genes involved in tissue repair","Clinical studies demonstrate significant improvement in skin density and thickness","Research shows stimulation of VEGF and FGF for angiogenesis and tissue repair"], suggestedDosage:"Topical: 1–5% concentration in serum or cream applied twice daily. Injectable: 1–2 mg subcutaneous 2–3x per week" },
+      { id:"sermorelin", name:"Sermorelin", tags:["Anti-Aging","Fat Loss","Muscle Recovery"], shortDescription:"GHRH analogue that stimulates the pituitary to naturally produce and release growth hormone.", benefits:["Stimulates natural pituitary GH production","Improves body composition — reduces fat, increases lean mass","Enhances energy levels and vitality","Improves sleep quality and duration","Supports bone density maintenance","Improves skin tone and reduces wrinkles","FDA-approved history with established safety profile"], imagePlaceholderUrl:"https://placehold.co/600x400/1a3a5c/a0d4ff?text=Sermorelin", researchNotes:["29-amino acid analogue of endogenous GHRH (1-44), the shortest fragment with full biological activity","Previously FDA-approved as Geref for GH deficiency in children before being discontinued commercially","Clinical studies show restoration of youthful GH secretion patterns in adults over 40","Research demonstrates improvements in body composition comparable to exogenous HGH with better safety profile","Studies show normalization of IGF-1 levels in GH-deficient adults after 3–6 months of therapy"], suggestedDosage:"200–500 mcg subcutaneous injection before bedtime, 5 days on / 2 days off cycling protocol" }
+    ];
+
+    /* ============================================================
+       STATE
+       ============================================================ */
+    let activeFilter = 'All';
+    let searchQuery  = '';
+    let savedFilter  = 'All';
+    let savedSearch  = '';
+
+    /* ============================================================
+       HELPERS
+       ============================================================ */
+    function tagClass(tag) {
+      return 'tag tag-' + tag.toLowerCase().replace(/\s+/g, '-');
+    }
+
+    function buildTagBadges(tags) {
+      return tags.map(t => `<span class="${tagClass(t)}">${t}</span>`).join('');
+    }
+
+    function filteredPeptides() {
+      return PEPTIDES.filter(p => {
+        const matchFilter = activeFilter === 'All' || p.tags.includes(activeFilter);
+        const q = searchQuery.toLowerCase();
+        const matchSearch = !q || p.name.toLowerCase().includes(q) || p.shortDescription.toLowerCase().includes(q);
+        return matchFilter && matchSearch;
+      });
+    }
+
+    /* ============================================================
+       RENDER CARDS
+       ============================================================ */
+    function renderCards() {
+      const grid    = document.getElementById('cardGrid');
+      const noRes   = document.getElementById('noResults');
+      const count   = document.getElementById('gridCount');
+      const results = filteredPeptides();
+
+      grid.innerHTML = results.map(p => `
+        <article class="peptide-card" data-id="${p.id}" tabindex="0" role="button" aria-label="View details for ${p.name}">
+          <img class="card-img" src="${p.imagePlaceholderUrl}" alt="${p.name}" loading="lazy" />
+          <div class="card-body">
+            <h2 class="card-name">${p.name}</h2>
+            <p class="card-tagline">${p.shortDescription}</p>
+            <div class="card-tags">${buildTagBadges(p.tags)}</div>
+          </div>
+        </article>
+      `).join('');
+
+      count.textContent = `${results.length} peptide${results.length !== 1 ? 's' : ''}`;
+      noRes.classList.toggle('visible', results.length === 0);
+
+      grid.querySelectorAll('.peptide-card').forEach(card => {
+        card.addEventListener('click', () => openDetail(card.dataset.id));
+        card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openDetail(card.dataset.id); });
+      });
+    }
+
+    /* ============================================================
+       OPEN DETAIL
+       ============================================================ */
+    function openDetail(id) {
+      const p = PEPTIDES.find(x => x.id === id);
+      if (!p) return;
+      savedFilter = activeFilter;
+      savedSearch = searchQuery;
+
+      if (window.innerWidth >= 768) {
+        openModal(p);
+      } else {
+        openMobileDetail(p);
+      }
+    }
+
+    function buildDetailHTML(p) {
+      return `
+        <div class="modal-tags">${buildTagBadges(p.tags)}</div>
+        <h2 class="modal-name">${p.name}</h2>
+        <p class="modal-desc">${p.shortDescription}</p>
+        <div class="modal-section">
+          <div class="modal-section-title">Key Benefits</div>
+          <ul class="modal-benefits">${p.benefits.map(b => `<li>${b}</li>`).join('')}</ul>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-title">Research Notes</div>
+          <div class="modal-notes">${p.researchNotes.map(n => `<div class="modal-note">${n}</div>`).join('')}</div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-title">Suggested Dosage</div>
+          <div class="modal-dosage">${p.suggestedDosage}</div>
+        </div>
+      `;
+    }
+
+    function openModal(p) {
+      document.getElementById('modalImg').src = p.imagePlaceholderUrl;
+      document.getElementById('modalImg').alt = p.name;
+      document.getElementById('modalTags').innerHTML = buildTagBadges(p.tags);
+      document.getElementById('modalName').textContent = p.name;
+      document.getElementById('modalDesc').textContent = p.shortDescription;
+      document.getElementById('modalBenefits').innerHTML = p.benefits.map(b => `<li>${b}</li>`).join('');
+      document.getElementById('modalNotes').innerHTML = p.researchNotes.map(n => `<div class="modal-note">${n}</div>`).join('');
+      document.getElementById('modalDosage').textContent = p.suggestedDosage;
+      document.getElementById('modalOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function openMobileDetail(p) {
+      document.getElementById('mobileDetailContent').innerHTML = `
+        <img style="width:100%;border-radius:8px;margin-bottom:16px" src="${p.imagePlaceholderUrl}" alt="${p.name}" />
+        ${buildDetailHTML(p)}
+      `;
+      document.getElementById('mobileDetail').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileDetail() {
+      document.getElementById('mobileDetail').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    /* ============================================================
+       EVENTS
+       ============================================================ */
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.getElementById('modalOverlay').addEventListener('click', e => {
+      if (e.target === document.getElementById('modalOverlay')) closeModal();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeMobileDetail(); } });
+    document.getElementById('mobileBack').addEventListener('click', closeMobileDetail);
+
+    document.getElementById('filterBar').addEventListener('click', e => {
+      const btn = e.target.closest('.filter-btn');
+      if (!btn) return;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      renderCards();
+    });
+
+    document.getElementById('searchInput').addEventListener('input', e => {
+      searchQuery = e.target.value;
+      renderCards();
+    });
+
+    /* Handle viewport resize — switch modal/mobile behaviour */
+    window.addEventListener('resize', () => {
+      const overlay = document.getElementById('modalOverlay');
+      const mobile  = document.getElementById('mobileDetail');
+      if (window.innerWidth >= 768 && mobile.classList.contains('open')) {
+        closeMobileDetail();
+      }
+      if (window.innerWidth < 768 && overlay.classList.contains('open')) {
+        closeModal();
+      }
+    });
+
+    /* ============================================================
+       INIT
+       ============================================================ */
+    renderCards();
+  </script>
+</body>
+</html>

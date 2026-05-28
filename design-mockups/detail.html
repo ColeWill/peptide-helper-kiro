@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BPC-157 — PeptideHelper</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ============================================================
+       DESIGN SYSTEM — single source of truth
+       ============================================================ */
+      :root {
+        --color-bg-primary: #0a1628;
+        --color-bg-secondary: #0d2b1e;
+        --color-bg-card: #0f1f35;
+        --color-bg-modal: #0d1e30;
+        --color-accent: #1db954;
+        --color-accent-hover: #17a349;
+        --color-blue-mid: #1a3a5c;
+        --color-blue-bright: #4a9eff;
+        --color-text-primary: #f0f4f0;
+        --color-text-secondary: #a0b0a8;
+        --color-border: #1e3a52;
+        --tag-fat-loss: #e85d04;
+        --tag-anti-aging: #7b2d8b;
+        --tag-youthful-skin: #0077b6;
+        --tag-muscle-recovery: #1db954;
+        --font-family: "Inter", system-ui, sans-serif;
+        --font-size-label: 12px;
+        --font-size-body: 16px;
+        --font-size-heading-sm: 20px;
+        --font-size-heading-lg: 36px;
+        --font-weight-normal: 400;
+        --font-weight-medium: 500;
+        --font-weight-semibold: 600;
+        --font-weight-bold: 700;
+        --space-1: 4px;
+        --space-2: 8px;
+        --space-3: 12px;
+        --space-4: 16px;
+        --space-6: 24px;
+        --space-8: 32px;
+        --space-12: 48px;
+        --space-16: 64px;
+        --radius-sm: 4px;
+        --radius-md: 8px;
+        --radius-pill: 9999px;
+        --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+        --shadow-modal: 0 24px 80px rgba(0, 0, 0, 0.7);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: var(--font-family);
+        font-size: var(--font-size-body);
+        color: var(--color-text-primary);
+        background-color: var(--color-bg-primary);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* NAV */
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 22, 40, 0.92);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--color-border);
+        padding: var(--space-4) var(--space-8);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav-logo {
+        font-size: var(--font-size-heading-sm);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-accent);
+      }
+      .nav-logo span {
+        color: var(--color-text-primary);
+      }
+      .nav-links {
+        display: flex;
+        gap: var(--space-6);
+      }
+      .nav-links a {
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-medium);
+        color: var(--color-text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--color-accent);
+      }
+
+      /* BACK LINK */
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        color: var(--color-accent);
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: var(--space-6) var(--space-8);
+        transition: gap 0.2s;
+      }
+      .back-link:hover {
+        gap: var(--space-3);
+      }
+
+      /* HERO BAND */
+      .detail-hero {
+        background: linear-gradient(
+          135deg,
+          var(--color-bg-secondary) 0%,
+          var(--color-bg-primary) 60%,
+          var(--color-blue-mid) 100%
+        );
+        padding: var(--space-8);
+        border-bottom: 1px solid var(--color-border);
+      }
+      .detail-hero-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-12);
+        align-items: center;
+      }
+      .detail-hero-img {
+        width: 100%;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-card);
+        aspect-ratio: 3/2;
+        object-fit: cover;
+      }
+      .detail-hero-meta {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+      .detail-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+      }
+      .tag {
+        font-size: 10px;
+        font-weight: var(--font-weight-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 3px var(--space-2);
+        border-radius: var(--radius-pill);
+        color: #fff;
+      }
+      .tag-fat-loss {
+        background: var(--tag-fat-loss);
+      }
+      .tag-anti-aging {
+        background: var(--tag-anti-aging);
+      }
+      .tag-youthful-skin {
+        background: var(--tag-youthful-skin);
+      }
+      .tag-muscle-recovery {
+        background: var(--tag-muscle-recovery);
+        color: var(--color-bg-primary);
+      }
+      .detail-name {
+        font-size: var(--font-size-heading-lg);
+        font-weight: var(--font-weight-bold);
+        line-height: 1.15;
+      }
+      .detail-subtitle {
+        font-size: var(--font-size-body);
+        color: var(--color-text-secondary);
+        line-height: 1.7;
+      }
+      .detail-dosage-pill {
+        display: inline-flex;
+        align-items: flex-start;
+        gap: var(--space-3);
+        background: var(--color-bg-card);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: var(--space-4);
+      }
+      .dosage-icon {
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+      .dosage-label {
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--color-accent);
+        margin-bottom: var(--space-1);
+      }
+      .dosage-value {
+        font-size: 14px;
+        color: var(--color-text-secondary);
+        line-height: 1.5;
+      }
+
+      /* CONTENT SECTIONS */
+      .detail-content {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: var(--space-8);
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: var(--space-8);
+      }
+      .section {
+        margin-bottom: var(--space-8);
+      }
+      .section-title {
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--color-accent);
+        margin-bottom: var(--space-4);
+        padding-bottom: var(--space-2);
+        border-bottom: 1px solid var(--color-border);
+      }
+      .benefits-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+      }
+      .benefits-list li {
+        display: flex;
+        gap: var(--space-3);
+        align-items: flex-start;
+        background: var(--color-bg-card);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: var(--space-3) var(--space-4);
+        font-size: var(--font-size-body);
+        transition: border-color 0.2s;
+      }
+      .benefits-list li:hover {
+        border-color: var(--color-accent);
+      }
+      .benefit-check {
+        color: var(--color-accent);
+        font-weight: bold;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .research-notes {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+      }
+      .research-note {
+        background: var(--color-bg-card);
+        border-left: 3px solid var(--color-blue-bright);
+        padding: var(--space-4);
+        border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        font-size: 14px;
+        color: var(--color-text-secondary);
+        line-height: 1.7;
+        position: relative;
+      }
+      .research-note::before {
+        content: "📄";
+        position: absolute;
+        top: var(--space-4);
+        right: var(--space-4);
+        font-size: 12px;
+        opacity: 0.5;
+      }
+
+      /* SIDEBAR */
+      .detail-sidebar {
+      }
+      .sidebar-card {
+        background: var(--color-bg-card);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: var(--space-6);
+        margin-bottom: var(--space-6);
+      }
+      .sidebar-card-title {
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+        margin-bottom: var(--space-4);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-2) 0;
+        border-bottom: 1px solid var(--color-border);
+      }
+      .stat-row:last-child {
+        border-bottom: none;
+      }
+      .stat-label {
+        font-size: var(--font-size-label);
+        color: var(--color-text-secondary);
+      }
+      .stat-value {
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-text-primary);
+      }
+      .disclaimer {
+        background: rgba(29, 185, 84, 0.08);
+        border: 1px solid rgba(29, 185, 84, 0.2);
+        border-radius: var(--radius-md);
+        padding: var(--space-4);
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+      }
+      .disclaimer strong {
+        color: var(--color-accent);
+      }
+
+      /* FOOTER */
+      .footer {
+        border-top: 1px solid var(--color-border);
+        padding: var(--space-8);
+        text-align: center;
+        color: var(--color-text-secondary);
+        font-size: var(--font-size-label);
+      }
+      .footer a {
+        color: var(--color-accent);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 767px) {
+        .nav {
+          padding: var(--space-3) var(--space-4);
+        }
+        .nav-links {
+          display: none;
+        }
+        .back-link {
+          padding: var(--space-4);
+        }
+        .detail-hero {
+          padding: var(--space-4);
+        }
+        .detail-hero-inner {
+          grid-template-columns: 1fr;
+          gap: var(--space-6);
+        }
+        .detail-name {
+          font-size: var(--font-size-heading-sm);
+        }
+        .detail-content {
+          grid-template-columns: 1fr;
+          padding: var(--space-4);
+          gap: var(--space-6);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav class="nav">
+      <div class="nav-logo">Peptide<span>Helper</span></div>
+      <div class="nav-links">
+        <a href="index.html">Explore</a>
+        <a href="detail.html">Detail View</a>
+        <a href="agent-insights.html">Agent Insights</a>
+        <a href="completed-specs.html">Completed Specs</a>
+      </div>
+    </nav>
+
+    <!-- BACK -->
+    <a href="index.html" class="back-link">← Back to all peptides</a>
+
+    <!-- HERO -->
+    <section class="detail-hero">
+      <div class="detail-hero-inner">
+        <img
+          class="detail-hero-img"
+          src="https://placehold.co/600x400/0d2b1e/1db954?text=BPC-157"
+          alt="BPC-157"
+        />
+        <div class="detail-hero-meta">
+          <div class="detail-tags">
+            <span class="tag tag-muscle-recovery">Muscle Recovery</span>
+            <span class="tag tag-anti-aging">Anti-Aging</span>
+          </div>
+          <h1 class="detail-name">BPC-157</h1>
+          <p class="detail-subtitle">
+            Body Protection Compound that accelerates healing of muscles,
+            tendons, and gut tissue.
+          </p>
+          <div class="detail-dosage-pill">
+            <span class="dosage-icon">💉</span>
+            <div>
+              <div class="dosage-label">Suggested Dosage</div>
+              <div class="dosage-value">
+                200–500 mcg per day, subcutaneous or intramuscular injection,
+                split into 1–2 doses
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <div class="detail-content">
+      <main>
+        <!-- BENEFITS -->
+        <div class="section">
+          <div class="section-title">Key Benefits</div>
+          <ul class="benefits-list">
+            <li>
+              <span class="benefit-check">✓</span> Accelerates tendon and
+              ligament healing
+            </li>
+            <li>
+              <span class="benefit-check">✓</span> Reduces inflammation in
+              muscle tissue
+            </li>
+            <li>
+              <span class="benefit-check">✓</span> Supports gut lining repair
+              and leaky gut syndrome
+            </li>
+            <li>
+              <span class="benefit-check">✓</span> Promotes angiogenesis (new
+              blood vessel formation)
+            </li>
+            <li>
+              <span class="benefit-check">✓</span> Neuroprotective effects
+              supporting brain health
+            </li>
+            <li>
+              <span class="benefit-check">✓</span> May reduce pain from injuries
+              and chronic conditions
+            </li>
+            <li>
+              <span class="benefit-check">✓</span> Supports joint health and
+              cartilage repair
+            </li>
+          </ul>
+        </div>
+
+        <!-- RESEARCH NOTES -->
+        <div class="section">
+          <div class="section-title">Research Notes</div>
+          <div class="research-notes">
+            <div class="research-note">
+              Derived from a protective protein found in human gastric juice
+            </div>
+            <div class="research-note">
+              Multiple rodent studies show accelerated Achilles tendon healing
+              vs. controls
+            </div>
+            <div class="research-note">
+              Shown to upregulate growth hormone receptors in tendon fibroblasts
+            </div>
+            <div class="research-note">
+              Research published in Journal of Physiology demonstrates gut
+              cytoprotective effects
+            </div>
+            <div class="research-note">
+              Currently in Phase II clinical trials for inflammatory bowel
+              disease
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- SIDEBAR -->
+      <aside class="detail-sidebar">
+        <div class="sidebar-card">
+          <div class="sidebar-card-title">Quick Stats</div>
+          <div class="stat-row">
+            <span class="stat-label">Type</span
+            ><span class="stat-value">Peptide</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Origin</span
+            ><span class="stat-value">Gastric Protein</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Route</span
+            ><span class="stat-value">SubQ / IM</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Half-life</span
+            ><span class="stat-value">~4 hours</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Research Stage</span
+            ><span class="stat-value">Phase II</span>
+          </div>
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-card-title">Categories</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px">
+            <span class="tag tag-muscle-recovery">Muscle Recovery</span>
+            <span class="tag tag-anti-aging">Anti-Aging</span>
+          </div>
+        </div>
+        <div class="disclaimer">
+          <strong>⚠ Research Purposes Only</strong><br />
+          This information is for educational purposes only and does not
+          constitute medical advice. Consult a qualified healthcare provider
+          before use.
+        </div>
+      </aside>
+    </div>
+
+    <footer class="footer">
+      <p>
+        PeptideHelper &copy; 2026 — For research and educational purposes only.
+        Not medical advice.
+      </p>
+      <p style="margin-top: 8px"><a href="index.html">← Back to Explore</a></p>
+    </footer>
+  </body>
+</html>
