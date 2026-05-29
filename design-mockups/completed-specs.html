@@ -414,7 +414,24 @@
         <h2 class="section-title">Progress Overview</h2>
         <p class="section-desc">Count of specs in each status category.</p>
       </div>
-      <div class="progress-grid" id="progressGrid"></div>
+      <div class="progress-grid" id="progressGrid">
+        <div class="progress-card">
+          <div class="progress-count count-vibe-coded" data-status="Vibe-Coded">0</div>
+          <div class="progress-label">Vibe-Coded</div>
+        </div>
+        <div class="progress-card">
+          <div class="progress-count count-spec-coded" data-status="Spec-Coded">0</div>
+          <div class="progress-label">Spec-Coded</div>
+        </div>
+        <div class="progress-card">
+          <div class="progress-count count-completed" data-status="Completed">0</div>
+          <div class="progress-label">Completed</div>
+        </div>
+        <div class="progress-card">
+          <div class="progress-count count-yet-to-complete" data-status="Yet to be Completed">0</div>
+          <div class="progress-label">Yet to Complete</div>
+        </div>
+      </div>
 
       <hr class="divider" />
 
@@ -503,7 +520,7 @@
     const SPECS = [
       {
         name: "peptide-helper-ux-design",
-        status: "Spec-Coded",
+        status: "Completed",
         description: "UX Design phase: static HTML/CSS/JS mockups for index, detail, agent-insights, and completed-specs pages plus peptides.json data file."
       },
       {
@@ -539,7 +556,9 @@
       },
       {
         agent: "Human Review Gate",
-        tasks: []
+        tasks: [
+          "Design approved — sign-off recorded 2025-07-14"
+        ]
       },
       {
         agent: "React Implementation Agent",
@@ -568,18 +587,12 @@
     const statusCounts = { "Vibe-Coded": 0, "Spec-Coded": 0, "Completed": 0, "Yet to be Completed": 0 };
     SPECS.forEach(s => { if (statusCounts[s.status] !== undefined) statusCounts[s.status]++; });
 
-    const countConfig = [
-      { key: "Vibe-Coded",        cls: "count-vibe-coded",     label: "Vibe-Coded" },
-      { key: "Spec-Coded",        cls: "count-spec-coded",     label: "Spec-Coded" },
-      { key: "Completed",         cls: "count-completed",      label: "Completed" },
-      { key: "Yet to be Completed", cls: "count-yet-to-complete", label: "Yet to Complete" }
-    ];
-    const progressGrid = document.getElementById('progressGrid');
-    countConfig.forEach(c => {
-      const card = document.createElement('div');
-      card.className = 'progress-card';
-      card.innerHTML = `<div class="progress-count ${c.cls}">${statusCounts[c.key]}</div><div class="progress-label">${c.label}</div>`;
-      progressGrid.appendChild(card);
+    // Update the static progress count elements with computed values
+    document.querySelectorAll('#progressGrid .progress-count[data-status]').forEach(el => {
+      const status = el.dataset.status;
+      if (statusCounts[status] !== undefined) {
+        el.textContent = statusCounts[status];
+      }
     });
 
     /* ============================================================

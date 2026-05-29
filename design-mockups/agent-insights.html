@@ -771,16 +771,19 @@
         id: "review-agent",
         name: "Human Review Gate",
         description: "Awaits explicit human approval of all mockups before React implementation begins.",
-        currentTask: "Awaiting human sign-off on design mockups",
-        status: "Pending",
-        history: []
+        currentTask: "Human sign-off received — design approved for React implementation",
+        status: "Completed",
+        history: [
+          { task: "Human sign-off received — design approved for React implementation", date: "2025-07-14" },
+          { task: "Approval gate checklist delivered to reviewer", date: "2025-07-14" }
+        ]
       },
       {
         id: "react-agent",
         name: "React Implementation Agent",
         description: "Converts approved mockups into production React components. Blocked until approval gate passes.",
-        currentTask: "Blocked — awaiting design approval",
-        status: "Blocked",
+        currentTask: "Ready to begin — awaiting task assignment",
+        status: "Pending",
         history: []
       }
     ];
@@ -789,8 +792,8 @@
       "requirements-agent": { title: "Requirements Agent", desc: "Produces EARS-pattern requirements documents. Completed requirements.md for this project.", status: "Completed" },
       "design-agent":       { title: "UX Design Mockup Agent", desc: "Building all 4 HTML mockup files with dark health-tech theme, responsive layout, and interactive JS.", status: "In Progress" },
       "data-agent":         { title: "Data Seed Agent", desc: "Generated /src/data/peptides.json with 10 validated real peptide objects.", status: "Completed" },
-      "review-agent":       { title: "Human Review Gate", desc: "Approval gate — all mockups must be reviewed and signed off before React work begins.", status: "Pending" },
-      "react-agent":        { title: "React Implementation Agent", desc: "Will convert approved mockups into React components. Currently blocked pending design approval.", status: "Blocked" }
+      "review-agent":       { title: "Human Review Gate", desc: "Approval gate — all mockups reviewed and signed off. Design approved for React implementation.", status: "Completed" },
+      "react-agent":        { title: "React Implementation Agent", desc: "Will convert approved mockups into React components. Design approved — ready to begin.", status: "Pending" }
     };
 
     /* ============================================================

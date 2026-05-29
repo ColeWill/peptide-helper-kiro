@@ -64,6 +64,15 @@
         /* Shadows */
         --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
         --shadow-modal: 0 24px 80px rgba(0, 0, 0, 0.7);
+
+        /* Misc */
+        --color-white: #fff;
+        --blur-nav: blur(12px);
+        --blur-modal: blur(4px);
+        --modal-close-size: 36px;
+        --translate-card-hover: translateY(-4px);
+        --translate-modal-in: translateY(20px);
+        --font-size-icon-lg: 48px;
       }
 
       /* ============================================================
@@ -110,7 +119,7 @@
         top: 0;
         z-index: 100;
         background: rgba(10, 22, 40, 0.92);
-        backdrop-filter: blur(12px);
+        backdrop-filter: var(--blur-nav);
         border-bottom: 1px solid var(--color-border);
         padding: var(--space-4) var(--space-8);
         display: flex;
@@ -328,7 +337,7 @@
         flex-direction: column;
       }
       .peptide-card:hover {
-        transform: translateY(-4px);
+        transform: var(--translate-card-hover);
         box-shadow: var(--shadow-card);
         border-color: var(--color-accent);
       }
@@ -369,7 +378,7 @@
         letter-spacing: 0.06em;
         padding: 3px var(--space-2);
         border-radius: var(--radius-pill);
-        color: #fff;
+        color: var(--color-white);
       }
       .tag-fat-loss {
         background: var(--tag-fat-loss);
@@ -396,7 +405,7 @@
         display: block;
       }
       .no-results-icon {
-        font-size: 48px;
+        font-size: var(--font-size-icon-lg);
         margin-bottom: var(--space-4);
       }
       .no-results h3 {
