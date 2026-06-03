@@ -1,0 +1,72 @@
+// ============================================================
+// COLOURS
+// ============================================================
+$color-bg-primary: #0a1628;
+$color-bg-secondary: #0d2b1e;
+$color-bg-card: #0f1f35;
+$color-bg-modal: #0d1e30;
+$color-accent: #1db954;
+$color-accent-hover: #17a349;
+$color-blue-mid: #1a3a5c;
+$color-blue-bright: #4a9eff;
+$color-text-primary: #f0f4f0;
+$color-text-secondary: #a0b0a8;
+$color-border: #1e3a52;
+$color-overlay: rgba(0, 0, 0, 0.75);
+$color-amber: #f59e0b;
+$color-amber-bg: rgba(245, 158, 11, 0.12);
+
+// ============================================================
+// TAG COLOURS
+// ============================================================
+$tag-fat-loss: #e85d04;
+$tag-anti-aging: #7b2d8b;
+$tag-youthful-skin: #0077b6;
+$tag-muscle-recovery: #1db954;
+
+// ============================================================
+// TYPOGRAPHY
+// ============================================================
+$font-family: "Inter", system-ui, sans-serif;
+$font-size-label: 12px;
+$font-size-body: 16px;
+$font-size-heading-sm: 20px;
+$font-size-heading-lg: 36px;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// ============================================================
+// SPACING
+// ============================================================
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-6: 24px;
+$space-8: 32px;
+$space-12: 48px;
+$space-16: 64px;
+
+// ============================================================
+// RADII
+// ============================================================
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-pill: 9999px;
+
+// ============================================================
+// SHADOWS
+// ============================================================
+$shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+$shadow-modal: 0 24px 80px rgba(0, 0, 0, 0.7);
+
+// ============================================================
+// BREAKPOINT MIXIN
+// ============================================================
+@mixin mobile {
+  @media (max-width: 767px) {
+    @content;
+  }
+}

@@ -1,0 +1,32 @@
+@use "../../styles/variables" as *;
+
+.badge {
+  font-size: 10px;
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-pill);
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.fatLoss {
+  background: var(--tag-fat-loss);
+  color: #fff;
+}
+
+.antiAging {
+  background: var(--tag-anti-aging);
+  color: #fff;
+}
+
+.youthfulSkin {
+  background: var(--tag-youthful-skin);
+  color: #fff;
+}
+
+.muscleRecovery {
+  background: var(--tag-muscle-recovery);
+  color: var(--color-bg-primary);
+}

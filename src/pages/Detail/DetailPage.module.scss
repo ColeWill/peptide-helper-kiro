@@ -1,0 +1,174 @@
+@use "../../styles/variables" as *;
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-8);
+
+  @include mobile {
+    padding: var(--space-4);
+  }
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-accent);
+  font-size: var(--font-size-label);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-8);
+  font-weight: var(--font-weight-semibold);
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.notFound {
+  text-align: center;
+  padding: var(--space-16);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  margin-bottom: var(--space-8);
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.heroLeft {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.heroRight {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.heroImage {
+  width: 100%;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  display: block;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.peptideName {
+  font-size: var(--font-size-heading-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+
+  @include mobile {
+    font-size: var(--font-size-heading-sm);
+  }
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.dosageCard {
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-secondary),
+    var(--color-blue-mid)
+  );
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.dosageLabel {
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-2);
+}
+
+.dosageValue {
+  font-size: 14px;
+  color: var(--color-text-primary);
+  line-height: 1.6;
+}
+
+.section {
+  margin-bottom: var(--space-6);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+  margin-bottom: var(--space-4);
+}
+
+.benefitsList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.benefitItem {
+  display: flex;
+  gap: var(--space-2);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+
+  &:hover {
+    border-color: var(--color-accent);
+  }
+}
+
+.check {
+  color: var(--color-accent);
+  flex-shrink: 0;
+  font-weight: var(--font-weight-bold);
+}
+
+.researchNote {
+  background: var(--color-bg-card);
+  border-left: 3px solid var(--color-blue-bright);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-bottom: var(--space-3);
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.disclaimer {
+  background: rgba(29, 185, 84, 0.08);
+  border: 1px solid rgba(29, 185, 84, 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-top: var(--space-4);
+}
