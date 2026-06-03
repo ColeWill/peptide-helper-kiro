@@ -122,14 +122,63 @@ export const agents: Agent[] = [
     name: "React Implementation Agent",
     description:
       "Converts approved mockups into production React components with routing, state management, and data layer.",
-    currentTask: "Writing design.md — implementation in progress",
-    status: "In Progress",
+    currentTask:
+      "React implementation complete — all pages and components built",
+    status: "Completed",
     history: [
       {
         task: "Wrote technical design document for react-implementation spec",
         date: "2026-05-30",
         status: "Completed",
         tokenUsage: { inputTokens: 14200, outputTokens: 22800, total: 37000 },
+      },
+      {
+        task: "Scaffolded Vite + React + TS project with pinned dependencies",
+        date: "2026-06-02",
+        status: "Completed",
+        tokenUsage: { inputTokens: 3100, outputTokens: 4800, total: 7900 },
+      },
+      {
+        task: "Created SCSS design system (_variables.scss, global.scss) with all tokens",
+        date: "2026-06-02",
+        status: "Completed",
+        tokenUsage: { inputTokens: 4500, outputTokens: 7200, total: 11700 },
+      },
+      {
+        task: "Built data layer — PeptideContext, typed interfaces, mock agent/specs data",
+        date: "2026-06-02",
+        status: "Completed",
+        tokenUsage: { inputTokens: 6800, outputTokens: 10400, total: 17200 },
+      },
+      {
+        task: "Built 7 shared components (Nav, InternalBanner, TagBadge, PeptideCard, FilterBar, SearchBar, DetailModal)",
+        date: "2026-06-02",
+        status: "Completed",
+        tokenUsage: { inputTokens: 18900, outputTokens: 28600, total: 47500 },
+      },
+      {
+        task: "Built Explore page with hero, filter/search, card grid, modal/navigate, empty state",
+        date: "2026-06-02",
+        status: "Completed",
+        tokenUsage: { inputTokens: 8400, outputTokens: 12100, total: 20500 },
+      },
+      {
+        task: "Built Detail page with two-column layout, all peptide fields, not-found state",
+        date: "2026-06-02",
+        status: "Completed",
+        tokenUsage: { inputTokens: 6200, outputTokens: 9800, total: 16000 },
+      },
+      {
+        task: "Built Agent Insights page with status cards, SVG flowchart, token totals, history table",
+        date: "2026-06-02",
+        status: "Completed",
+        tokenUsage: { inputTokens: 9600, outputTokens: 14200, total: 23800 },
+      },
+      {
+        task: "Built Completed Specs page with progress grid, specs table, token usage, prompt history",
+        date: "2026-06-02",
+        status: "Completed",
+        tokenUsage: { inputTokens: 8900, outputTokens: 13400, total: 22300 },
       },
     ],
   },

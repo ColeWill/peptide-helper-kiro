@@ -45,13 +45,14 @@ export const specs: Spec[] = [
   {
     id: "react-implementation",
     name: "React Implementation",
-    status: "Yet to be Completed",
+    status: "Completed",
     description:
       "Convert approved mockups into production React components with routing, state management, and data layer.",
     agent: "React Implementation Agent",
-    timestamp: "2026-05-30T09:00:00Z",
-    summary: "Design document written. Component implementation in progress.",
-    tokenUsage: { inputTokens: 14200, outputTokens: 22800, total: 37000 },
+    timestamp: "2026-06-02T14:00:00Z",
+    summary:
+      "Full Vite + React + TS + SCSS SPA built with all 4 pages, 7 components, live filtering, and responsive layout.",
+    tokenUsage: { inputTokens: 80800, outputTokens: 123300, total: 204100 },
   },
 ];
 
@@ -88,7 +89,17 @@ export const agentTaskSummaries: AgentTaskSummary[] = [
   },
   {
     agent: "React Implementation Agent",
-    tasks: ["Wrote technical design document for react-implementation spec"],
+    tasks: [
+      "Wrote technical design document for react-implementation spec",
+      "Scaffolded Vite + React + TS project with pinned dependencies",
+      "Created SCSS design system with all tokens from approved mockups",
+      "Built data layer — PeptideContext, typed interfaces, mock agent/specs data",
+      "Built 7 shared components (Nav, InternalBanner, TagBadge, PeptideCard, FilterBar, SearchBar, DetailModal)",
+      "Built Explore page with hero, filter/search, card grid, modal/navigate, empty state",
+      "Built Detail page with two-column layout, all peptide fields, not-found state",
+      "Built Agent Insights page with status cards, SVG flowchart, token totals, history table",
+      "Built Completed Specs page with progress grid, specs table, token usage, prompt history",
+    ],
   },
 ];
 
